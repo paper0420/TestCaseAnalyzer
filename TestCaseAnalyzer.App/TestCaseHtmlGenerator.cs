@@ -18,7 +18,9 @@ namespace TestCaseAnalyzer.App
             string testCaseDetail =
                 $"<a href='./index.html'>Home</a>" +
                 $"<h1>{testCase.ID}</h1>\n" +
-                $"{testCase.Objective}<br>\n" +
+                $"[{testCase.ItemClass1}],[{testCase.ItemClass2}],[{testCase.ItemClass3}]"+
+                $"</br>"+
+                $"Test Objective: {testCase.Objective}<br>\n" +
                 $"<h2>Requirements</h2>" +
                 $"{requirementsHtml}" +
                 $"<h2>Epics</h2>" +
@@ -62,7 +64,8 @@ namespace TestCaseAnalyzer.App
 
                 requirementsHtml += 
                     $"<li>" +
-                    $"<strong>{requirement.ID}</strong> - {requirement.Objective}" +
+                    $"<strong>{requirement.ID}</strong> - [{requirement.changeStatus}] [{requirement.panaStatus}]"+
+                    $"<br>{requirement.Objective}" +
                     $"{epicIdsAsString}" +
                     $"</li>\n";
             }

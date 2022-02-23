@@ -9,14 +9,15 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         public void GenerateReport(List<TestCase> testCases, List<Requirement> requirements)
         {
             Directory.CreateDirectory("report");
-            string menu = null;
+
+            string testcaseMenu = null;
 
             for (int i = 0; i < testCases.Count; i++)
             {
                 TestCase testCase = testCases[i];
                 if (testCase.ID != null)
                 {
-                    menu += $"<a href='{testCase.ID.Replace("#", "")}.html'>{testCase.ID}</a><br>\n";
+                    testcaseMenu += $"<a href='{testCase.ID.Replace("#", "")}.html'>{testCase.ID}</a><br>\n";
                 }
             }
 
@@ -34,9 +35,9 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 }
             }
 
-            Console.WriteLine(menu);
 
-            File.WriteAllText("report/index.html", menu);
+
+            File.WriteAllText("report/index.html", testcaseMenu);
         }
     }
 }
