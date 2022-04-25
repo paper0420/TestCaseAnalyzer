@@ -19,7 +19,7 @@ namespace TestCaseAnalyzer.App
             {
                 if(!string.IsNullOrWhiteSpace(id?.ToString()))
                 {
-                    this.ID = (int)reader.GetDouble(1);
+                    this.ID = reader.GetValue(1)?.ToString();
                     this.Objective = reader.GetString(5);
                     //Console.WriteLine(ID);
 
@@ -43,7 +43,7 @@ namespace TestCaseAnalyzer.App
      
 
         
-        public int ID { get; }
+        public string ID { get; }
         public string Objective { get; }
         public string ChangeStatus { get; }
         public string ItemType { get; }

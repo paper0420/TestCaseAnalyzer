@@ -14,16 +14,11 @@ namespace TestCaseAnalyzer.App
             Console.WriteLine("write Data");
 
             List<string> testCaseID = new List<string>();
-            HashSet<int> newReqs = new HashSet<int>();
-            HashSet<int> delRejReqs = new HashSet<int>();
+            HashSet<string> newReqs = new HashSet<string>();
+            HashSet<string> delRejReqs = new HashSet<string>();
             List<int> carLineNumbers = new List<int>();
+            HashSet<string> checkDuplicated = new HashSet<string>();
 
-            List<int> carLineIndexG08LCI = new List<int> { 0, 6, 12 };
-            List<int> carLineIndexG26 = new List<int> { 1, 7, 13 };
-            List<int> carLineIndexG28 = new List<int> { 2, 8, 14 };
-            List<int> carLineIndexG60 = new List<int> { 3, 9, 15 };
-            List<int> carLineIndexG70 = new List<int> { 4, 10,16 };
-            List<int> carLineIndexI20 = new List<int> { 5, 11,17 };
 
             int row = 1;
 
@@ -46,12 +41,14 @@ namespace TestCaseAnalyzer.App
             spec.xlsSheet["Q1"].Value = "Result";
             spec.xlsSheet["R1"].Value = "Ticket Number";
             spec.xlsSheet["S1"].Value = "Comment";
+            spec.xlsSheet["T1"].Value = "Param Sheet";
 
 
             foreach (var testCase in spec.allTestCaseIDs)
             {
                 int carline = 0;
                 carLineNumbers.Clear();
+                string concatEpic ="";
                 //string testTime = "";
                 //string result = "";
                 //string comment = "";
@@ -126,16 +123,24 @@ namespace TestCaseAnalyzer.App
 
                                     break;
 
-                                case 5:
+                                case 5: //Old KLH
+                                    
                                     foreach (var tc in spec.testCases)
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            string concatReqs = String.Join(" \n", tc.RequirementIDs.ToArray());
-                                            string concatEpic = String.Join(" \n", tc.EpicIDs.ToArray());
+                                            string concatReqs = String.Join("\n", tc.RequirementIDs.ToArray());
+                                            if(tc.EpicIDs.Length != 0)
                                             {
+                                                concatEpic = String.Join("\n", tc.EpicIDs.ToArray());
                                                 spec.xlsSheet.SetCellValue(row, column, $"{concatReqs}\n{concatEpic}");
                                             }
+                                            else
+                                            {
+                                                spec.xlsSheet.SetCellValue(row, column, $"{concatReqs}");
+                                            }
+                                            
+                              
                                         }
                                     }
 
@@ -188,11 +193,18 @@ namespace TestCaseAnalyzer.App
                                                 }
                                             }
 
-                                            string concatEpic = String.Join(" \n", tc.EpicIDs.ToArray());
-                                            string newReq = String.Join(" \n", newReqs.ToArray());
+                                            //string concatEpic = String.Join("\n", tc.EpicIDs.ToArray());
+                                            string newReq = String.Join("\n", newReqs.ToArray());
+                                            if (tc.EpicIDs.Length != 0)
                                             {
+                                                concatEpic = String.Join("\n", tc.EpicIDs.ToArray());
                                                 spec.xlsSheet.SetCellValue(row, column, $"{newReq}\n{concatEpic}");
                                             }
+                                            else
+                                            {
+                                                spec.xlsSheet.SetCellValue(row, column, $"{newReq}");
+                                            }
+                                           
 
                                         }
                                     }
@@ -203,9 +215,9 @@ namespace TestCaseAnalyzer.App
 
                                     break;
 
-                                case 7:
+                                case 7: //deleted rejected KLH
 
-                                    string delRejReq = String.Join(" \n", delRejReqs.ToArray());
+                                    string delRejReq = String.Join("\n", delRejReqs.ToArray());
                                     {
                                         spec.xlsSheet.SetCellValue(row, column, $"{delRejReq}");
                                     }
@@ -213,7 +225,7 @@ namespace TestCaseAnalyzer.App
                                     delRejReqs.Clear();
                                     break;
 
-                                case 8:
+                                case 8: // Type L1 L2 L3
 
                                     for (var ind = 0;ind<=5;ind++)
                                     {
@@ -352,7 +364,7 @@ namespace TestCaseAnalyzer.App
                                     break;
 
 
-                                case 15:
+                                case 15: //Test time
                                     if (carline == 1)
                                     {
                                         
@@ -419,7 +431,7 @@ namespace TestCaseAnalyzer.App
 
                                     break;
 
-                                case 16:
+                                case 16: //History
                                     if (carline == 1)
                                     {
                                         string detail = "";
@@ -503,7 +515,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+                              
                                         for (var ind = 0; ind <= 5; ind++)
                                         {
 
@@ -511,14 +523,17 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.TicketNumber}\n";
+                                                    if (!checkDuplicated.Contains(carlineDetail.TicketNumber))
+                                                    {
+                                                        detail += $"{carlineDetail.TicketNumber}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.TicketNumber);
 
                                                 }
                                             }
                                             count++;
                                         }
-
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
@@ -528,7 +543,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+                                 
                                         for (var ind = 6; ind <= 11; ind++)
                                         {
 
@@ -536,14 +551,19 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.TicketNumber}\n";
+
+                                                    if (!checkDuplicated.Contains(carlineDetail.TicketNumber))
+                                                    {
+                                                        detail += $"{carlineDetail.TicketNumber}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.TicketNumber);
+
 
                                                 }
                                             }
                                             count++;
                                         }
-
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
@@ -553,7 +573,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+                                      
                                         for (var ind = 12; ind <= 17; ind++)
                                         {
 
@@ -561,14 +581,19 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.TicketNumber}\n";
+
+                                                    if (!checkDuplicated.Contains(carlineDetail.TicketNumber))
+                                                    {
+                                                        detail += $"{carlineDetail.TicketNumber}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.TicketNumber);
+
 
                                                 }
                                             }
                                             count++;
                                         }
-
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
@@ -578,11 +603,13 @@ namespace TestCaseAnalyzer.App
 
                                 case 18:// Comment
 
+                                    
                                     if (carline == 1)
                                     {
+                                        
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+                           
                                         for (var ind = 0; ind <= 5; ind++)
                                         {
 
@@ -590,14 +617,31 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.Comment}\n"; 
-                                                  
-                                                }
+                                                    if (!checkDuplicated.Contains(carlineDetail.Comment))
+                                                    {
+                                                        detail += $"{carlineDetail.Comment}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.Comment); 
+
+                                                 }
+  
+                                                
                                             }
                                             count++;
                                         }
 
+                                       
+
+                                        foreach (var tc in spec.testCases)
+                                        {
+                                            if (testCase == tc.ID)
+                                            {
+                                                detail += $"{tc.Comment}";
+
+                                            }
+                                        }
+
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
@@ -605,9 +649,10 @@ namespace TestCaseAnalyzer.App
 
                                     if (carline == 2)
                                     {
+                                     
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+
                                         for (var ind = 6; ind <= 11; ind++)
                                         {
 
@@ -615,14 +660,30 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.Comment}\n";
+                                                    if (!checkDuplicated.Contains(carlineDetail.Comment))
+                                                    {
+                                                        detail += $"{carlineDetail.Comment}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.Comment);
 
                                                 }
+
                                             }
                                             count++;
                                         }
 
+
+
+                                        foreach (var tc in spec.testCases)
+                                        {
+                                            if (testCase == tc.ID)
+                                            {
+                                                detail += $"{tc.Comment}";
+
+                                            }
+                                        }
+
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
@@ -630,9 +691,10 @@ namespace TestCaseAnalyzer.App
 
                                     if (carline == 3)
                                     {
+                               
                                         string detail = "";
                                         int count = 1;
-                                        string name = "";
+                           
                                         for (var ind = 12; ind <= 17; ind++)
                                         {
 
@@ -640,20 +702,46 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    name = GetCarlineName(count);
-                                                    detail += $"{carlineDetail.Comment}\n";
+                                                    if (!checkDuplicated.Contains(carlineDetail.Comment))
+                                                    {
+                                                        detail += $"{carlineDetail.Comment}\n";
+                                                    }
+                                                    checkDuplicated.Add(carlineDetail.Comment);
 
                                                 }
+
                                             }
                                             count++;
                                         }
 
+
+                                        foreach (var tc in spec.testCases)
+                                        {
+                                            if (testCase == tc.ID)
+                                            {
+                                                detail += $"{tc.Comment}";
+
+                                            }
+                                        }
+
+                                        checkDuplicated.Clear();
                                         spec.xlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
 
-                                    break;                          
+                                    foreach (var tc in spec.testCases)
+                                    {
+                                        if (testCase == tc.ID)
+                                        {
+                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.Comment}");
+                                         
+                                        }
+                                    }
+
+                                    break;
+
+
 
                             }
 
