@@ -6,28 +6,27 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 {
     public class HtmlReportGenerator : IReportGenerator
     {
-        public void GenerateReport(List<TestCase> testCases, List<Requirement> requirements)
+        public void GenerateReport(SpecParameters spec)
         {
             Directory.CreateDirectory("report");
 
             string testcaseMenu = null;
 
-            for (int i = 0; i < testCases.Count; i++)
+            foreach(var testCase in spec.testCases)
             {
-                TestCase testCase = testCases[i];
                 if (testCase.ID != null)
                 {
                     testcaseMenu += $"<a href='{testCase.ID.Replace("#", "")}.html'>{testCase.ID}</a><br>\n";
                 }
+
             }
 
-            foreach (var testCase in testCases)
+            foreach (var testCase in spec.testCases)
             {
                 if (testCase.ID != null)
                 {
                     string testCaseDetail = TestCaseHtmlGenerator.CreateTestCaseHtml(
-                        requirements,
-                        testCase);
+                        spec.currentRequirements,testCase);
 
                     File.WriteAllText(
                         $"report/{testCase.ID.Replace("#", "")}.html",

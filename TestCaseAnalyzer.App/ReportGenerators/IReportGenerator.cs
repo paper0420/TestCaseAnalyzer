@@ -4,7 +4,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 {
     public interface IReportGenerator
     {
-        void GenerateReport(List<TestCase> testCases, List<Requirement> requirements);
+        void GenerateReport(SpecParameters spec);
 
     }
 }

@@ -40,6 +40,7 @@ namespace TestCaseAnalyzer.App
 
             this.RequirementIDs = requirementIds.ToArray();
             this.EpicIDs = epicIds.ToArray();
+            this.SYR_ID = reader.GetValue(11)?.ToString();
 
         }
 
@@ -48,6 +49,7 @@ namespace TestCaseAnalyzer.App
         public string Allocation { get; }
         public string[] RequirementIDs { get; }
         public string[] EpicIDs { get; }
+        public string SYR_ID { get; }
 
     }
 
