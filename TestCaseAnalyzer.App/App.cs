@@ -12,8 +12,8 @@ namespace TestCaseAnalyzer.App
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var reader = new DataFileReader();
             
-            var currentKLH = reader.ReadFile(currentFile, "KLH_BL10.14", 1, t => new Requirement(t)).ToList();
-            var executedTestcases = reader.ReadFile("Test_caseIDs.xlsx", "Test_Item", 2, t => new TestCaseOnlyExecutedItem(t)).ToList();
+            var currentKLH = reader.ReadFile(newFile, "KLH_BL11.1", 1, t => new Requirement(t)).ToList();
+            var executedTestcases = reader.ReadFile("SYQT_Specification_V04.xlsx", "Test_Item", 1, t => new TestCaseOnlyExecutedItem(t)).ToList();
 
             //var panaTestCases = reader.ReadFile("data1.xlsm", "5.テスト項目Test item", 18, t => new TestCase(t)).ToList();
             //var newKLH = reader.ReadFile(newFile, "Sheet1", 2, t => new Requirement(t)).ToList();

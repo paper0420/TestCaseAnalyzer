@@ -18,12 +18,14 @@ namespace TestCaseAnalyzer.App
                     {
                         if (reader.Name == sheet)
                         {
-
-                            for (int i = 0; i < rowNumber; i++)
+                            if(rowNumber != 1)
                             {
-                                reader.Read();
-                            }
+                                for (int i = 0; i < rowNumber; i++)
+                                {
+                                    reader.Read();
+                                }
 
+                            }                
 
 
                             while (reader.Read())

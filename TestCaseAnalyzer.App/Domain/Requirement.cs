@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using System;
 
 namespace TestCaseAnalyzer.App
 {
@@ -6,7 +7,13 @@ namespace TestCaseAnalyzer.App
     {
         public Requirement(IExcelDataReader reader)
         {
-            int changeStatusIndex = ExcelColumnReader.GetColumnIndex("A_Change Status");
+            int changeStatusIndex = ExcelColumnReader.GetColumnIndex("A_Change Status",reader);
+            int panaStatusIndex = ExcelColumnReader.GetColumnIndex("A_Pana Status",reader);
+
+            Console.WriteLine("change Index" + changeStatusIndex);
+            Console.WriteLine("panaStatus Index" + panaStatusIndex);
+            this.changeStatus = reader.GetString(changeStatusIndex);
+            this.panaStatus = reader.GetString(changeStatusIndex);
 
             var id = reader.GetValue(1);
             if (!string.IsNullOrWhiteSpace(id?.ToString()))
@@ -17,8 +24,7 @@ namespace TestCaseAnalyzer.App
 
             this.Objective = reader.GetString(5);
 
-            this.changeStatus = reader.GetString(2);
-            this.panaStatus = reader.GetString(5);
+
             this.VerificationMeasure = reader.GetValue(13)?.ToString().Replace("\n","");
             this.Type = reader.GetValue(4)?.ToString();
             //this.EpicIDs = reader
