@@ -29,7 +29,7 @@ namespace TestCaseAnalyzer.App
         {
             this.TestcaseSpecIDIndex = GetIndexNumber(reader, "Test Case ID");
             this.TestcaseSpecObjectiveIndex = GetIndexNumber(reader, "Test objective");
-            this.TestcaseSpecRequirementIndex = GetIndexNumber(reader, "Current KLH");
+            this.TestcaseSpecRequirementIndex = GetIndexNumber(reader, "Current KLH");           
         }
 
         private void GetKLHFileIndex(IExcelDataReader reader)
