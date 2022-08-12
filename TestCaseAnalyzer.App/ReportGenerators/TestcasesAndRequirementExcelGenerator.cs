@@ -29,14 +29,15 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         private static void GenerateRequirementsExcel(List<Requirement> requirements, TestCaseOnlyExecutedItem testCase, WorkSheet xlsSheet)
         {
             var testCaseRequirements = requirements
-                .Where(t => testCase.RequirementIDs.Any(c => c == t.ID))
+                .Where(requirement => testCase.RequirementIDs.Any(tcReqID => tcReqID == requirement.ID))
                 .ToList();
 
+            
             int row = 5;
             foreach (var requirement in testCaseRequirements)
             {
 
-
+                Console.WriteLine(requirement);
                 //    xlsSheet[$"A{Row}"].Value = $"{testCase.ID}";
                 //    xlsSheet[$"B{Row}"].Value = $"{testCase.Objective}";
                 xlsSheet[$"C{row}"].Value = $"{requirement.ID},[{requirement.changeStatus}],[{requirement.panaStatus}]";

@@ -12,13 +12,13 @@ namespace TestCaseAnalyzer.App
             this.changeStatus = reader.GetString(index.ChangeStatusIndex);
             this.panaStatus = reader.GetString(index.ChangeStatusIndex);
 
-            var id = reader.GetValue(1);
+            var id = reader.GetValue(index.KLHIDIndex);
             if (!string.IsNullOrWhiteSpace(id?.ToString()))
             {
-                this.ID = reader.GetValue(1)?.ToString();
+                this.ID = reader.GetValue(index.KLHIDIndex)?.ToString();
             }
 
-            this.Objective = reader.GetString(5);
+            this.Objective = reader.GetString(index.KLHObjectiveIndex);
 
 
             this.VerificationMeasure = reader.GetValue(13)?.ToString().Replace("\n", "");
