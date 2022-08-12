@@ -10,7 +10,7 @@ namespace TestCaseAnalyzer.App
         static void Main(string[] args)
         {
             App.RunMyApp(
-                "KLH11_BL1.xlsx",
+                FileNames.KlhFile,
                 "KLH10_14.xlsx");
            
             //var g08LCITestcasesL1 = reader.ReadFile("SW.2041.121_G08LCI_Tracking.xlsm", "HVRTU", 4, t => LTestCases.ReadL1(t)).ToList();
@@ -179,9 +179,9 @@ namespace TestCaseAnalyzer.App
 
         
 
-        private static List<CarlineTestcases> GetCarlineTestcase(DataFileReader reader, string file)
-        {
-            return reader.ReadFile(file, "Summary", 4, t => new CarlineTestcases(t)).ToList();
-        }
+        //private static List<CarlineTestcases> GetCarlineTestcase(DataFileReader reader, string file)
+        //{
+        //    return reader.ReadFile(file, "Summary", 4, t => new CarlineTestcases(t)).ToList();
+        //}
     }
 }

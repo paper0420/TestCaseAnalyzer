@@ -7,11 +7,11 @@ namespace TestCaseAnalyzer.App
 {
     public class TestCaseOnlyExecutedItem
     {
-        public TestCaseOnlyExecutedItem(IExcelDataReader reader)
+        public TestCaseOnlyExecutedItem(IExcelDataReader reader, ExcelColumnReader index)
         {
-            this.ID = reader.GetValue(0)?.ToString();
-            this.Objective = reader.GetString(4);
-            var idsAsString = reader.GetValue(6)?.ToString()?.Split('\n') ?? new string[0];
+            this.ID = reader.GetValue(index.TestcaseSpecIDIndex)?.ToString();
+            this.Objective = reader.GetString(index.TestcaseSpecObjectiveIndex);
+            var idsAsString = reader.GetValue(index.TestcaseSpecRequirementIndex)?.ToString()?.Split('\n') ?? new string[0];
 
             //var requirementIds = new List<int>();
             var requirementIds = new List<string>();

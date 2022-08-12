@@ -7,8 +7,12 @@ namespace TestCaseAnalyzer.App
 {
     public class DataFileReader
     {
-        public IEnumerable<T> ReadFile<T>(string file, string sheet, int rowNumber, Func<IExcelDataReader, T> func)
+        public IEnumerable<T> ReadFile<T>(string file,
+            string sheet,
+            int rowNumber,
+            Func<IExcelDataReader, ExcelColumnReader, T> func)
         {
+
             using (var stream = File.Open(file, FileMode.Open, FileAccess.Read))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -18,19 +22,23 @@ namespace TestCaseAnalyzer.App
                     {
                         if (reader.Name == sheet)
                         {
-                            if(rowNumber != 1)
+                            if (rowNumber != 1)
                             {
                                 for (int i = 0; i < rowNumber; i++)
                                 {
                                     reader.Read();
+
                                 }
 
-                            }                
+                            }
 
+
+                            reader.Read();
+                            var index = new ExcelColumnReader(reader,file);
 
                             while (reader.Read())
                             {
-                                var t = func(reader);
+                                var t = func(reader, index);
                                 yield return t;
                             }
                         }
@@ -38,6 +46,15 @@ namespace TestCaseAnalyzer.App
                     } while (reader.NextResult());
                 }
             }
+
+
+
+
+
+
+
+
+
         }
 
     }

@@ -1,19 +1,16 @@
 ﻿using ExcelDataReader;
 using System;
+using System.Collections.Generic;
 
 namespace TestCaseAnalyzer.App
 {
     public class Requirement
     {
-        public Requirement(IExcelDataReader reader)
+        public Requirement(IExcelDataReader reader, ExcelColumnReader index)
         {
-            int changeStatusIndex = ExcelColumnReader.GetColumnIndex("A_Change Status",reader);
-            int panaStatusIndex = ExcelColumnReader.GetColumnIndex("A_Pana Status",reader);
 
-            Console.WriteLine("change Index" + changeStatusIndex);
-            Console.WriteLine("panaStatus Index" + panaStatusIndex);
-            this.changeStatus = reader.GetString(changeStatusIndex);
-            this.panaStatus = reader.GetString(changeStatusIndex);
+            this.changeStatus = reader.GetString(index.ChangeStatusIndex);
+            this.panaStatus = reader.GetString(index.ChangeStatusIndex);
 
             var id = reader.GetValue(1);
             if (!string.IsNullOrWhiteSpace(id?.ToString()))
@@ -21,11 +18,10 @@ namespace TestCaseAnalyzer.App
                 this.ID = reader.GetValue(1)?.ToString();
             }
 
-
             this.Objective = reader.GetString(5);
 
 
-            this.VerificationMeasure = reader.GetValue(13)?.ToString().Replace("\n","");
+            this.VerificationMeasure = reader.GetValue(13)?.ToString().Replace("\n", "");
             this.Type = reader.GetValue(4)?.ToString();
             //this.EpicIDs = reader
             //    .GetString(21)?
