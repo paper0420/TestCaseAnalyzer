@@ -11,7 +11,9 @@ namespace TestCaseAnalyzer.App
         {
             this.ID = reader.GetValue(index.TestcaseSpecIDIndex)?.ToString();
             this.Objective = reader.GetString(index.TestcaseSpecObjectiveIndex);
-            var idsAsString = reader.GetValue(index.TestcaseSpecRequirementIndex)?.ToString()?.Split('\n') ?? new string[0];
+            var idsAsString = reader.GetValue(index.TestcaseSpecRequirementIndex)?
+                .ToString()?
+                .Split('\n') ?? new string[0];
 
             //var requirementIds = new List<int>();
             var requirementIds = new List<string>();
@@ -38,7 +40,8 @@ namespace TestCaseAnalyzer.App
             this.RequirementIDs = requirementIds.ToArray();
             this.EpicIDs = epicIds.ToArray();
             this.G70 = reader.GetValue(13)?.ToString();
-            this.Type = reader.GetValue(8)?.ToString();
+            this.G60 = reader.GetValue(index.TestcaseSpecG60Index)?.ToString();
+            this.Type = reader.GetValue(index.TestcaseSpecTypeIndex)?.ToString();
             this.Result = reader.GetValue(17)?.ToString().Replace("\n"," ");
 
             this.ItemClass1 = reader.GetString(1);
@@ -51,6 +54,8 @@ namespace TestCaseAnalyzer.App
         public string[] RequirementIDs { get; }
         public string[] EpicIDs { get; }
         public string G70 { get; }
+        public string G60 { get; }
+
         public string Type { get; }
         public string Result { get; }
         public string Objective { get; }

@@ -15,7 +15,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
             List<string> testCaseID = new List<string>();
 
-            foreach (var testCase in spec.testCases)
+            foreach (var testCase in spec.TestCases)
             {
 
                 if (testCase.ID != null)
@@ -26,7 +26,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
                         //Console.WriteLine(xlsSheet2.Name);
 
-                        TestcasesAndRequirementExcelGenerator.CreateTestCaseExcel(spec.currentRequirements, testCase, xlsSheet2);
+                        TestcasesAndRequirementExcelGenerator.CreateTestCaseExcel(spec.CurrentRequirements, testCase, xlsSheet2);
 
                     }
 
@@ -46,7 +46,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         {
             Directory.CreateDirectory("TestSpec");
             WorkBook xlsxWorkbook = WorkBook.Create(ExcelFileFormat.XLSX);
-            spec.xlsSheet = xlsxWorkbook.CreateWorkSheet("Test_Item");
+            spec.XlsSheet = xlsxWorkbook.CreateWorkSheet("Test_Item");
 
             Console.WriteLine("Gen folder");
 

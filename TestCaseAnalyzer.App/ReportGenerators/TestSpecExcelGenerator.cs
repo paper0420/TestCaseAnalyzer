@@ -22,26 +22,26 @@ namespace TestCaseAnalyzer.App
 
             int row = 1;
 
-            spec.xlsSheet["A1"].Value = "Test Case ID";
-            spec.xlsSheet["B1"].Value = "Class1";
-            spec.xlsSheet["C1"].Value = "Class2";
-            spec.xlsSheet["D1"].Value = "Class3";
-            spec.xlsSheet["E1"].Value = "Test objective";
-            spec.xlsSheet["F1"].Value = "Old KLH";
-            spec.xlsSheet["G1"].Value = "Current KLH";
-            spec.xlsSheet["H1"].Value = "Deleted/Rejected KLH";
-            spec.xlsSheet["I1"].Value = "Type";
-            spec.xlsSheet["J1"].Value = "G08LCI";
-            spec.xlsSheet["K1"].Value = "G26";
-            spec.xlsSheet["L1"].Value = "G28";
-            spec.xlsSheet["M1"].Value = "G60";
-            spec.xlsSheet["N1"].Value = "G70";
-            spec.xlsSheet["O1"].Value = "I20";
-            spec.xlsSheet["P1"].Value = "Test Time";
-            spec.xlsSheet["Q1"].Value = "Result";
-            spec.xlsSheet["R1"].Value = "Ticket Number";
-            spec.xlsSheet["S1"].Value = "Comment";
-            spec.xlsSheet["T1"].Value = "Param Sheet";
+            spec.XlsSheet["A1"].Value = "Test Case ID";
+            spec.XlsSheet["B1"].Value = "Class1";
+            spec.XlsSheet["C1"].Value = "Class2";
+            spec.XlsSheet["D1"].Value = "Class3";
+            spec.XlsSheet["E1"].Value = "Test objective";
+            spec.XlsSheet["F1"].Value = "Old KLH";
+            spec.XlsSheet["G1"].Value = "Current KLH";
+            spec.XlsSheet["H1"].Value = "Deleted/Rejected KLH";
+            spec.XlsSheet["I1"].Value = "Type";
+            spec.XlsSheet["J1"].Value = "G08LCI";
+            spec.XlsSheet["K1"].Value = "G26";
+            spec.XlsSheet["L1"].Value = "G28";
+            spec.XlsSheet["M1"].Value = "G60";
+            spec.XlsSheet["N1"].Value = "G70";
+            spec.XlsSheet["O1"].Value = "I20";
+            spec.XlsSheet["P1"].Value = "Test Time";
+            spec.XlsSheet["Q1"].Value = "Result";
+            spec.XlsSheet["R1"].Value = "Ticket Number";
+            spec.XlsSheet["S1"].Value = "Comment";
+            spec.XlsSheet["T1"].Value = "Param Sheet";
 
 
             foreach (var testCase in spec.allTestCaseIDs)
@@ -67,12 +67,12 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.ID}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.ID}");
                                             break;
                                         }
                                         else
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{testCase}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{testCase}");
                                         }
                                     }
 
@@ -83,7 +83,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.ItemClass1}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.ItemClass1}");
                                             break;
                                         }
                                     }
@@ -94,7 +94,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.ItemClass2}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.ItemClass2}");
                                             break;
                                         }
                                     }
@@ -105,7 +105,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.ItemClass3}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.ItemClass3}");
                                             break;
                                         }
                                     }
@@ -116,7 +116,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.Objective}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.Objective}");
                                             break;
                                         }
                                     }
@@ -133,11 +133,11 @@ namespace TestCaseAnalyzer.App
                                             if(tc.EpicIDs.Length != 0)
                                             {
                                                 concatEpic = String.Join("\n", tc.EpicIDs.ToArray());
-                                                spec.xlsSheet.SetCellValue(row, column, $"{concatReqs}\n{concatEpic}");
+                                                spec.XlsSheet.SetCellValue(row, column, $"{concatReqs}\n{concatEpic}");
                                             }
                                             else
                                             {
-                                                spec.xlsSheet.SetCellValue(row, column, $"{concatReqs}");
+                                                spec.XlsSheet.SetCellValue(row, column, $"{concatReqs}");
                                             }
                                             
                               
@@ -198,11 +198,11 @@ namespace TestCaseAnalyzer.App
                                             if (tc.EpicIDs.Length != 0)
                                             {
                                                 concatEpic = String.Join("\n", tc.EpicIDs.ToArray());
-                                                spec.xlsSheet.SetCellValue(row, column, $"{newReq}\n{concatEpic}");
+                                                spec.XlsSheet.SetCellValue(row, column, $"{newReq}\n{concatEpic}");
                                             }
                                             else
                                             {
-                                                spec.xlsSheet.SetCellValue(row, column, $"{newReq}");
+                                                spec.XlsSheet.SetCellValue(row, column, $"{newReq}");
                                             }
                                            
 
@@ -219,7 +219,7 @@ namespace TestCaseAnalyzer.App
 
                                     string delRejReq = String.Join("\n", delRejReqs.ToArray());
                                     {
-                                        spec.xlsSheet.SetCellValue(row, column, $"{delRejReq}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{delRejReq}");
                                     }
 
                                     delRejReqs.Clear();
@@ -234,7 +234,7 @@ namespace TestCaseAnalyzer.App
                                         {
                                             if (testCase==carlineDetail.ID)
                                             {
-                                                spec.xlsSheet.SetCellValue(row, column, $"L1");
+                                                spec.XlsSheet.SetCellValue(row, column, $"L1");
                                                 carLineNumbers.Add(ind);
                                                 carline = 1;
                                               
@@ -257,7 +257,7 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    spec.xlsSheet.SetCellValue(row, column, $"L2");
+                                                    spec.XlsSheet.SetCellValue(row, column, $"L2");
                                                     carLineNumbers.Add(ind);
                                                     carline = 2;
                                                     
@@ -280,7 +280,7 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    spec.xlsSheet.SetCellValue(row, column, $"L3");
+                                                    spec.XlsSheet.SetCellValue(row, column, $"L3");
                                                     carLineNumbers.Add(ind);
                                                     carline = 3;
                                                    
@@ -304,7 +304,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 0 || carLinenumber == 6 || carLinenumber == 12)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
 
@@ -316,7 +316,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 1 || carLinenumber == 7 || carLinenumber == 13)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
                                     break;
@@ -326,7 +326,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 2 || carLinenumber == 8 || carLinenumber == 14)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
                                     break;
@@ -337,7 +337,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 3 || carLinenumber == 9 || carLinenumber == 15)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
                                     break;
@@ -348,7 +348,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 4 || carLinenumber == 10 || carLinenumber == 16)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
                                     break;
@@ -358,7 +358,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (carLinenumber == 5 || carLinenumber == 11 || carLinenumber == 17)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"X");
+                                            spec.XlsSheet.SetCellValue(row, column, $"X");
                                         }
                                     }
                                     break;
@@ -375,7 +375,7 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    spec.xlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
+                                                    spec.XlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
                                                     break;
 
                                                 }
@@ -397,7 +397,7 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    spec.xlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
+                                                    spec.XlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
                                                     break;
 
                                                 }
@@ -419,7 +419,7 @@ namespace TestCaseAnalyzer.App
                                             {
                                                 if (testCase == carlineDetail.ID)
                                                 {
-                                                    spec.xlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
+                                                    spec.XlsSheet.SetCellValue(row, column, $"{carlineDetail.TestTime}");
                                                     break;
 
                                                 }
@@ -452,7 +452,7 @@ namespace TestCaseAnalyzer.App
                                             count++;
                                         }
 
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -477,7 +477,7 @@ namespace TestCaseAnalyzer.App
                                             count++;
                                         }
 
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -503,7 +503,7 @@ namespace TestCaseAnalyzer.App
 
                                         }
 
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -534,7 +534,7 @@ namespace TestCaseAnalyzer.App
                                             count++;
                                         }
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -564,7 +564,7 @@ namespace TestCaseAnalyzer.App
                                             count++;
                                         }
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -594,7 +594,7 @@ namespace TestCaseAnalyzer.App
                                             count++;
                                         }
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -642,7 +642,7 @@ namespace TestCaseAnalyzer.App
                                         }
 
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -684,7 +684,7 @@ namespace TestCaseAnalyzer.App
                                         }
 
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -725,7 +725,7 @@ namespace TestCaseAnalyzer.App
                                         }
 
                                         checkDuplicated.Clear();
-                                        spec.xlsSheet.SetCellValue(row, column, $"{detail}");
+                                        spec.XlsSheet.SetCellValue(row, column, $"{detail}");
                                         break;
 
                                     }
@@ -734,7 +734,7 @@ namespace TestCaseAnalyzer.App
                                     {
                                         if (testCase == tc.ID)
                                         {
-                                            spec.xlsSheet.SetCellValue(row, column, $"{tc.Comment}");
+                                            spec.XlsSheet.SetCellValue(row, column, $"{tc.Comment}");
                                          
                                         }
                                     }

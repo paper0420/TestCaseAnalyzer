@@ -12,12 +12,12 @@ namespace TestCaseAnalyzer.App
             HashSet<string> oReq = new HashSet<string>();
             HashSet<string> nReq = new HashSet<string>();
 
-            foreach (var oldReq in spec.currentRequirements)
+            foreach (var oldReq in spec.CurrentRequirements)
             {
                 oReq.Add(oldReq.ID);
             }
 
-            foreach (var newReq in spec.newRequirements)
+            foreach (var newReq in spec.NewRequirements)
             {
                 nReq.Add(newReq.ID);
             }
@@ -32,9 +32,9 @@ namespace TestCaseAnalyzer.App
             }
 
 
-            foreach (var oldReq in spec.currentRequirements)
+            foreach (var oldReq in spec.CurrentRequirements)
             {
-                foreach (var newReq in spec.newRequirements)
+                foreach (var newReq in spec.NewRequirements)
                 {
                     if (oldReq.ID == newReq.ID)
                     {
@@ -91,7 +91,7 @@ namespace TestCaseAnalyzer.App
                     }
 
                     var isLinked = false;
-                    foreach (var tc in spec.testCases)
+                    foreach (var tc in spec.TestCases)
                     {
                         var isTCLinked = tc.RequirementIDs.Any(t => t == req);
                         if (isTCLinked)
@@ -107,7 +107,7 @@ namespace TestCaseAnalyzer.App
                         tcIDLinked = "No";
                     }
 
-                    foreach (var KLH in spec.currentRequirements)
+                    foreach (var KLH in spec.CurrentRequirements)
                     {
                         if (req == KLH.ID)
                         {
@@ -158,11 +158,11 @@ namespace TestCaseAnalyzer.App
 
         public static void CheckAttributes(SpecParameters spec)
         {
-            foreach(var tc in spec.testCases)
+            foreach(var tc in spec.TestCases)
             {
                 foreach(var tcReq in tc.RequirementIDs)
                 {
-                    foreach(var req in spec.newRequirements)
+                    foreach(var req in spec.NewRequirements)
                     {
                         if(tcReq == req.ID)
                         {
@@ -189,7 +189,7 @@ namespace TestCaseAnalyzer.App
         public static void FindFTTtstCasesinENG10(SpecParameters spec)
         {
 
-            foreach(var tc in spec.testCases)
+            foreach(var tc in spec.TestCases)
             {
                 string obj = "";
                 if (tc.Objective != null)
@@ -207,14 +207,14 @@ namespace TestCaseAnalyzer.App
 
             HashSet<string> klhChecked = new HashSet<string>();
 
-            foreach (var tc in spec.testCases)
+            foreach (var tc in spec.TestCases)
             {
                foreach(var klh in tc.RequirementIDs)
                 {
                     string obj = "";
                     if (!klhChecked.Contains(klh))
                     {
-                        foreach (var req in spec.currentRequirements)
+                        foreach (var req in spec.CurrentRequirements)
                         {
                             if (klh == req.ID)
                             {

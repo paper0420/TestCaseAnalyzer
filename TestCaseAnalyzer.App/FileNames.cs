@@ -10,6 +10,9 @@ namespace TestCaseAnalyzer.App
     {
         public const string KlhFile = "KLH11_BL1.xlsx";
         public const string TestSpecFile = "SYQT_Specification_V04.xlsx";
+        public const string ReportTemplateFile = "SystemTestReport.xlsm";
+
+
     }
 
 }

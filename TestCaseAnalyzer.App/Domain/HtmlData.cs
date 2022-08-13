@@ -8,10 +8,6 @@ namespace TestCaseAnalyzer.App.Domain
 {
     public class HtmlData
     {
-     
-
-
-
         public string ID { get; set; }
         public string TotalTestResult { get; set; }
         public int NumberOfPassed { get; set; }

@@ -12,7 +12,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
             string testcaseMenu = null;
 
-            foreach(var testCase in spec.testCases)
+            foreach(var testCase in spec.TestCases)
             {
                 if (testCase.ID != null)
                 {
@@ -21,12 +21,12 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
             }
 
-            foreach (var testCase in spec.testCases)
+            foreach (var testCase in spec.TestCases)
             {
                 if (testCase.ID != null)
                 {
                     string testCaseDetail = TestCaseHtmlGenerator.CreateTestCaseHtml(
-                        spec.currentRequirements,testCase);
+                        spec.CurrentRequirements,testCase);
 
                     File.WriteAllText(
                         $"report/{testCase.ID.Replace("#", "")}.html",

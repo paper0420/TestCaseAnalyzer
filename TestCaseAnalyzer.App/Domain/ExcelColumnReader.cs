@@ -29,7 +29,13 @@ namespace TestCaseAnalyzer.App
         {
             this.TestcaseSpecIDIndex = GetIndexNumber(reader, "Test Case ID");
             this.TestcaseSpecObjectiveIndex = GetIndexNumber(reader, "Test objective");
-            this.TestcaseSpecRequirementIndex = GetIndexNumber(reader, "Current KLH");           
+            this.TestcaseSpecRequirementIndex = GetIndexNumber(reader, "Current KLH");
+            this.TestcaseSpecTypeIndex = GetIndexNumber(reader, "Type");
+            this.TestcaseSpecG60Index = GetIndexNumber(reader, "G60");
+            this.TestcaseSpecG70Index = GetIndexNumber(reader, "G70");
+            this.TestcaseSpecClass1 = GetIndexNumber(reader, "Class1");
+            this.TestcaseSpecClass2 = GetIndexNumber(reader, "Class2");
+            this.TestcaseSpecClass3 = GetIndexNumber(reader, "Class3");
         }
 
         private void GetKLHFileIndex(IExcelDataReader reader)
@@ -59,6 +65,12 @@ namespace TestCaseAnalyzer.App
         public int TestcaseSpecIDIndex { get; set; }
         public int TestcaseSpecObjectiveIndex { get; set; }
         public int TestcaseSpecRequirementIndex { get; set; }
+        public int TestcaseSpecTypeIndex { get; set; }
+        public int TestcaseSpecG60Index { get; set; }
+        public int TestcaseSpecG70Index { get; set; }
+        public int TestcaseSpecClass1 { get; set; }
+        public int TestcaseSpecClass2 { get; set; }
+        public int TestcaseSpecClass3 { get; set; }
         public int KLHIDIndex { get; set; }
         public int KLHObjectiveIndex { get; set; }
         public int ChangeStatusIndex { get; set; }
