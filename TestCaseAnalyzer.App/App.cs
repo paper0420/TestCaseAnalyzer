@@ -10,11 +10,22 @@ namespace TestCaseAnalyzer.App
     {
         public static void RunMyApp(string newFile, string currentFile)
         {
+            
+
+
+            Console.Write("Enter Car Line: ");
+            string carLine = Console.ReadLine();
+            Console.Write("Enter report type: ");
+            string reportType = Console.ReadLine();
+           
+            Console.WriteLine($"***Car Line: {carLine} Report type: {reportType}");
+
+
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var reader = new ExcelReader();
             var currentKLH = reader.ReadFile(FileNames.KlhFile, "KLH_BL11.1", 1, (t,y) => new Requirement(t,y)).ToList();
             var executedTestcases = reader.ReadFile(FileNames.TestSpecFile, "Test_Item", 1, (t,y) => new TestCaseOnlyExecutedItem(t,y)).ToList();
-            var htmlReports = HtmlReader.ReadHtmlFullReport().ToList();
+            var htmlReports = HtmlReader.ReadHtmlFullReport(reportType).ToList();
 
             //var panaTestCases = reader.ReadFile("data1.xlsm", "5.テスト項目Test item", 18, t => new TestCase(t)).ToList();
             //var newKLH = reader.ReadFile(newFile, "Sheet1", 2, t => new Requirement(t)).ToList();
@@ -34,11 +45,9 @@ namespace TestCaseAnalyzer.App
             var baseSpec = new SpecParameters(
                 currentRequirments: currentKLH,
                 testCases: executedTestcases,
-                htmlDatas: htmlReports);  
-            
-            FinalReportGenerator.GenerateFinalReport(baseSpec);
+                htmlDatas: htmlReports);
 
-
+            FinalReportGenerator.GenerateReport(baseSpec, reportType, carLine);
         }
     }
 }

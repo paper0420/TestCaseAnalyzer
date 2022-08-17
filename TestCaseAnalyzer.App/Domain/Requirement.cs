@@ -12,6 +12,14 @@ namespace TestCaseAnalyzer.App
             this.changeStatus = reader.GetString(index.ChangeStatusIndex);
             this.panaStatus = reader.GetString(index.ChangeStatusIndex);
 
+            //var fusaType = reader.GetValue(index.FuSaTypeIndex);
+            //if (!string.IsNullOrWhiteSpace(fusaType?.ToString()))
+            //{
+            //    this.FusaType = reader.GetString(index.FuSaTypeIndex).Trim();
+
+            //}
+            this.FusaType = reader.GetValue(index.FuSaTypeIndex)?.ToString();
+
             var id = reader.GetValue(index.KLHIDIndex);
             if (!string.IsNullOrWhiteSpace(id?.ToString()))
             {
@@ -37,6 +45,8 @@ namespace TestCaseAnalyzer.App
         public string VerificationMeasure { get; }
         public string Type { get; }
         public string[] EpicIDs { get; }
+        public string FusaType { get; }
+
 
 
     }

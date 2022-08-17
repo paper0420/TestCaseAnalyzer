@@ -39,8 +39,8 @@ namespace TestCaseAnalyzer.App
         public string Objective { get; }
         public string ChangeStatus { get; }
         public string ItemType { get; }
-
         public string PanaStatus { get; }
+
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using IronXL;
 using System.Collections.Generic;
+using System.Linq;
 using TestCaseAnalyzer.App.Domain;
 
 namespace TestCaseAnalyzer.App
@@ -21,9 +22,23 @@ namespace TestCaseAnalyzer.App
             List<string> allTestCaseIDs = null,
             List<HtmlData> htmlDatas = null)
         {
-            this.CurrentRequirements = currentRequirments;
+           
             this.NewRequirements = newRequirements;
+
             this.TestCases = testCases;
+            this.TestCasesByID = testCases.ToDictionary(testCase=>testCase.ID);
+
+            this.CurrentRequirements = currentRequirments;
+            this.CurrentRequirementsByID = currentRequirments
+                .Where(curRequirement => curRequirement.ID!=null)
+                .ToDictionary(curRequirement => curRequirement.ID);
+
+            this.HtmlDatas = htmlDatas;
+            this.HtmlDatasByID = htmlDatas
+                .Where(htmlData => htmlData.ID != null)
+                .DistinctBy(htmlData => htmlData.ID)
+                .ToDictionary(htmlData => htmlData.ID);
+
             this.delReqs = delReqs;
             this.rejReqs = rejReqs;
             this.syrItems = syrItems;
@@ -33,13 +48,17 @@ namespace TestCaseAnalyzer.App
             this.XlsSheet = xlsSheet;
             this.allCarlineTestcaseDetails = allCarlineTestcaseDetails;
             this.allTestCaseIDs = allTestCaseIDs;
-            this.HtmlDatas = htmlDatas;
+           
 
         }
 
         public List<Requirement> CurrentRequirements { get; set; }
         public List<Requirement> NewRequirements { get; set; }
         public List<TestCaseOnlyExecutedItem> TestCases { get; set; }
+        public Dictionary<string, TestCaseOnlyExecutedItem> TestCasesByID { get; set; }
+        public Dictionary<string, Requirement> CurrentRequirementsByID { get; set; }
+        public List<HtmlData> HtmlDatas { get; set; }
+        public Dictionary<string, HtmlData> HtmlDatasByID { get; set; }
         public List<DeletedReq> delReqs { get; set; }
         public List<RejectedReq> rejReqs { get; set; }
         public List<SYRitem> syrItems { get; set; }
@@ -51,6 +70,6 @@ namespace TestCaseAnalyzer.App
         public List<LTestCases>[] allCarlineTestcaseDetails { get; set; }
 
         public List<string> allTestCaseIDs { get; set; }
-        public List<HtmlData> HtmlDatas { get; set; }
+        
     }
 }
