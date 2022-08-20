@@ -19,6 +19,8 @@ namespace TestCaseAnalyzer.App.FileReader
             Console.WriteLine("***Collecting data from HTML reports**");
 
             var processed = new HashSet<string>();
+          
+
 
             foreach (var file in files)
             {
@@ -28,9 +30,7 @@ namespace TestCaseAnalyzer.App.FileReader
                 var doc = new HtmlDocument();
                 doc.Load(path);
 
-                // H
-
-                string expectedTestCaseId = GetFileLabel(file);
+               string expectedTestCaseId = GetFileLabel(file);
 
                 var testCaseIDNode = doc.DocumentNode.SelectSingleNode("//body/table/tr/td/big")
                     .InnerText
@@ -38,6 +38,12 @@ namespace TestCaseAnalyzer.App.FileReader
                     .Replace("_", "-");
 
                 var testCaseID = $"#{testCaseIDNode}#";
+
+                if (expectedTestCaseId != testCaseID)
+                {
+                    Console.WriteLine($"File name {expectedTestCaseId} and HTML header {testCaseID} mismatch");
+                    testCaseID = expectedTestCaseId;
+                }
 
                 if (processed.Contains(testCaseID))
                 {
@@ -47,10 +53,11 @@ namespace TestCaseAnalyzer.App.FileReader
 
                 processed.Add(testCaseID);
 
-                if (expectedTestCaseId != testCaseID)
-                {
-                    Console.WriteLine($"File {expectedTestCaseId} and test case {testCaseID} mismatch");
-                }
+                var hwNode = doc.DocumentNode.SelectNodes("//body/div/div")[1]
+                    .SelectSingleNode("table").InnerText;
+                Console.WriteLine(hwNode);
+
+
 
                 var totalTestResultNode = doc.DocumentNode.SelectSingleNode("//body/center/table/tr/td")
                     .InnerText;
@@ -60,10 +67,12 @@ namespace TestCaseAnalyzer.App.FileReader
                 if (totalTestResultNode.Contains("passed"))
                 {
                     totalTestResult = "PASSED";
+                 
                 }
                 else
                 {
                     totalTestResult = "FAILED";
+                    
                 }
 
                 var notExecutedTestCaseNumber = doc.DocumentNode.SelectNodes("//body/div")[1]
@@ -98,6 +107,8 @@ namespace TestCaseAnalyzer.App.FileReader
 
                 yield return data;
             }
+
+
         }
 
         private static string GetFileLabel(string file)
@@ -165,5 +176,9 @@ namespace TestCaseAnalyzer.App.FileReader
 
             return files;
         }
+
+
+
+
     }
 }

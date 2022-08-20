@@ -42,18 +42,18 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         }
 
 
-        public static void GenerateTestSpec(SpecParameters spec)
-        {
-            Directory.CreateDirectory("TestSpec");
-            WorkBook xlsxWorkbook = WorkBook.Create(ExcelFileFormat.XLSX);
-            spec.XlsSheet = xlsxWorkbook.CreateWorkSheet("Test_Item");
+        //public static void GenerateTestSpec(SpecParameters spec)
+        //{
+        //    Directory.CreateDirectory("TestSpec");
+        //    WorkBook xlsxWorkbook = WorkBook.Create(ExcelFileFormat.XLSX);
+        //    spec.XlsSheet = xlsxWorkbook.CreateWorkSheet("Test_Item");
 
-            Console.WriteLine("Gen folder");
+        //    Console.WriteLine("Gen folder");
 
-            TestSpecExcelGenerator.CreateTestSpecExcel(spec);
+        //    TestSpecExcelGenerator.CreateTestSpecExcel(spec);
 
-            xlsxWorkbook.SaveAs("TestSpec/TestSpecification.xlsx");
-        }
+        //    xlsxWorkbook.SaveAs("TestSpec/TestSpecification.xlsx");
+        //}
 
 
 

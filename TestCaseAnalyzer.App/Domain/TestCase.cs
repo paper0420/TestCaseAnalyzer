@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,14 @@ namespace TestCaseAnalyzer.App
             this.TotalTestResults = reader.GetString(76)?.Replace(" ",string.Empty);
             this.TestResultFuSi = reader.GetString(135)?.Replace(" ",string.Empty);
             this.TestResultFunctional = reader.GetString(188)?.Replace(" ", string.Empty);
+            this.VerificationMethod = reader.GetValue(25)?.ToString();
+            this.TestCatHV = reader.GetValue(14)?.ToString().Replace("-", "");
+            this.TestCatBasic = reader.GetValue(15)?.ToString().Replace("-", "");
+            this.TestCatFusa = reader.GetValue(16)?.ToString().Replace("-", "");
+            this.TestCatFunc = reader.GetValue(18)?.ToString().Replace("-", "");
+            this.TestCatFull = reader.GetValue(19)?.ToString().Replace("-", "");
+
+            Console.WriteLine($"{this.ID} {this.VerificationMethod} {this.TestCatHV}");
 
             var idsAsString = reader.GetValue(11)?.ToString()?.Split('\n') ?? new string[0];
 
@@ -110,7 +119,12 @@ namespace TestCaseAnalyzer.App
         public string TotalTestResults { get; }
         public string TestResultFuSi { get; }
         public string TestResultFunctional { get; }
-
+        public string VerificationMethod { get; }
+        public string TestCatHV { get; }
+        public string TestCatBasic { get; }
+        public string TestCatFusa { get; }
+        public string TestCatFunc { get; }
+        public string TestCatFull { get; }
         public string Comment { get; }
 
 

@@ -15,6 +15,7 @@ namespace TestCaseAnalyzer.App.Domain
         public int NumberOfNotExecuted { get; set; }
 
 
+
     }
 
 

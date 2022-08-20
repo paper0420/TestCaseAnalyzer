@@ -11,6 +11,7 @@ namespace TestCaseAnalyzer.App
 
             this.changeStatus = reader.GetString(index.ChangeStatusIndex);
             this.panaStatus = reader.GetString(index.ChangeStatusIndex);
+            this.VerificationSpecStatus = reader.GetValue(index.VerificationSpecStatusIndex)?.ToString();
 
             //var fusaType = reader.GetValue(index.FuSaTypeIndex);
             //if (!string.IsNullOrWhiteSpace(fusaType?.ToString()))
@@ -18,7 +19,7 @@ namespace TestCaseAnalyzer.App
             //    this.FusaType = reader.GetString(index.FuSaTypeIndex).Trim();
 
             //}
-            this.FusaType = reader.GetValue(index.FuSaTypeIndex)?.ToString();
+            this.FusaType = reader.GetValue(index.KLHEAS_ASILIndex)?.ToString();
 
             var id = reader.GetValue(index.KLHIDIndex);
             if (!string.IsNullOrWhiteSpace(id?.ToString()))
@@ -42,6 +43,7 @@ namespace TestCaseAnalyzer.App
         public string Objective { get; }
         public string changeStatus { get; }
         public string panaStatus { get; }
+        public string VerificationSpecStatus { get; }
         public string VerificationMeasure { get; }
         public string Type { get; }
         public string[] EpicIDs { get; }

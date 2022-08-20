@@ -7,7 +7,7 @@ namespace TestCaseAnalyzer.App
 {
     public class ExcelColumnReader
     {
-        public ExcelColumnReader(IExcelDataReader reader, string file)
+        public ExcelColumnReader(IExcelDataReader reader, string file, string sheet)
         {
             if (file == FileNames.KlhFile)
             {
@@ -17,12 +17,38 @@ namespace TestCaseAnalyzer.App
 
             if (file == FileNames.TestSpecFile)
             {
-                GetTestspecFileIndex(reader);
+                switch (sheet)
+                {
+                    case "Test_Item":
+                        GetTestspecFileIndex(reader);
+                        break;
+
+                    case "SafetyGoal":
+                        GetSafetyGoalSheetIndex(reader);
+                        break;
+
+                    case "KLH_BL11.1":
+                        GetKLHFileIndex(reader);
+                        break;
+                        default:
+                        throw new($"Unknown sheet name '{sheet}'.");
+
+                }
+                
                 return;
 
             }
 
             throw new($"Unknown file name '{file}'.");
+        }
+
+        private void GetSafetyGoalSheetIndex(IExcelDataReader reader)
+        {
+            this.SGKLHID = GetIndexNumber(reader, "Object ID from Original");
+            this.AttributeIndex = GetIndexNumber(reader, "attribute");
+            this.EAS_ASILIndex = GetIndexNumber(reader, "EAS_ASIL");
+            this.SgIndex = GetIndexNumber(reader, "SG");
+
         }
 
         private void GetTestspecFileIndex(IExcelDataReader reader)
@@ -43,6 +69,14 @@ namespace TestCaseAnalyzer.App
             this.TestcaseSpecClass3Index = GetIndexNumber(reader, "Class3");
             this.TestcaseSpecResultIndex = GetIndexNumber(reader, "Result");
             this.TestcaseSpecCommentIndex = GetIndexNumber(reader, "Comment");
+            this.VerificationMethodIndex = GetIndexNumber(reader, "Verification Method");
+            this.TestCatHVIndex = GetIndexNumber(reader, "TestCat-HV");
+            this.TestCatBasicIndex = GetIndexNumber(reader, "TestCat-Basic");
+            this.TestCatFusaIndex = GetIndexNumber(reader, "TestCat-Fusa");
+            this.TestCatFuncIndex = GetIndexNumber(reader, "TestCat-Func");
+            this.TestCatFullIndex = GetIndexNumber(reader, "TestCat-Full");
+
+
 
         }
 
@@ -52,7 +86,8 @@ namespace TestCaseAnalyzer.App
             this.KLHObjectiveIndex = GetIndexNumber(reader, "Englisch");
             this.ChangeStatusIndex = GetIndexNumber(reader, "A_Change Status");
             this.PanaStatusIndex = GetIndexNumber(reader, "A_Pana Status");
-            this.FuSaTypeIndex = GetIndexNumber(reader, "EAS_ASIL");
+            this.KLHEAS_ASILIndex = GetIndexNumber(reader, "EAS_ASIL");
+            this.VerificationSpecStatusIndex = GetIndexNumber(reader, "A_Verification_Specification_Status");
 
         }
 
@@ -87,15 +122,23 @@ namespace TestCaseAnalyzer.App
         public int TestcaseSpecClass3Index { get; set; }
         public int TestcaseSpecResultIndex { get;set; }
         public int TestcaseSpecCommentIndex { get; set; }
+        public int VerificationMethodIndex { get; private set; }
+        public int TestCatHVIndex { get; private set; }
+        public int TestCatBasicIndex { get; private set; }
+        public int TestCatFusaIndex { get; private set; }
+        public int TestCatFuncIndex { get; private set; }
+        public int TestCatFullIndex { get; private set; }
         public int KLHIDIndex { get; set; }
         public int KLHObjectiveIndex { get; set; }
         public int ChangeStatusIndex { get; set; }
         public int PanaStatusIndex { get; set; }
-        public int FuSaTypeIndex { get; set; }
+        public int KLHEAS_ASILIndex { get; set; }
+        public int VerificationSpecStatusIndex { get; private set; }
         public string VerificationMeasure { get; set; }
         public string Type { get; set; }
-
-
-
+        public int SGKLHID { get; private set; }
+        public int AttributeIndex { get; private set; }
+        public int EAS_ASILIndex { get; private set; }
+        public int SgIndex { get; private set; }
     }
 }

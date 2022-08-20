@@ -35,7 +35,7 @@ namespace TestCaseAnalyzer.App.FileReader
 
 
                             reader.Read();
-                            var index = new ExcelColumnReader(reader, file);
+                            var index = new ExcelColumnReader(reader, file,sheet);
 
                             while (reader.Read())
                             {
@@ -52,7 +52,45 @@ namespace TestCaseAnalyzer.App.FileReader
         }
 
 
-        
+        public IEnumerable<T> ReadPanaFile<T>(string file,
+            string sheet,
+            int rowNumber,
+            Func<IExcelDataReader, T> func)
+        {
+
+            using (var stream = File.Open(file, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+
+                    do
+                    {
+                        if (reader.Name == sheet)
+                        {
+                            if (rowNumber != 1)
+                            {
+                                for (int i = 1; i < rowNumber; i++)
+                                {
+                                    reader.Read();
+
+                                }
+
+                            }
+
+
+                            while (reader.Read())
+                            {
+                                var t = func(reader);
+                                yield return t;
+                            }
+                        }
+
+                    } while (reader.NextResult());
+                }
+            }
+
+
+        }
 
 
 

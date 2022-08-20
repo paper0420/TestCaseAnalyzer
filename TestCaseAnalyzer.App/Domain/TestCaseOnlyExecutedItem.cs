@@ -63,6 +63,13 @@ namespace TestCaseAnalyzer.App
 
             this.Comment = reader.GetValue(index.TestcaseSpecCommentIndex)?.ToString();
 
+            this.VerificationMethod = reader.GetValue(index.VerificationMethodIndex)?.ToString();
+            this.TestCatHV = reader.GetValue(index.TestCatHVIndex)?.ToString();
+            this.TestCatBasic = reader.GetValue(index.TestCatHVIndex)?.ToString();
+            this.TestCatFusa = reader.GetValue(index.TestCatFusaIndex)?.ToString();
+            this.TestCatFunc = reader.GetValue(index.TestCatFuncIndex)?.ToString();
+            this.TestCatFull = reader.GetValue(index.TestCatFullIndex)?.ToString();
+
 
 
 
@@ -102,6 +109,12 @@ namespace TestCaseAnalyzer.App
         public string ItemClass3 { get; }
         public string Carline { get; }
         public string Comment { get; }
+        public string VerificationMethod { get; }
+        public string TestCatHV { get; }
+        public string TestCatBasic { get; }
+        public string TestCatFusa { get; }
+        public string TestCatFunc { get; }
+        public string TestCatFull { get; }
 
 
 
