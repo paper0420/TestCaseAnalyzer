@@ -11,10 +11,7 @@ namespace TestCaseAnalyzer.App
             List<Requirement> currentRequirments = null,
             List<Requirement> newRequirements = null,
             List<TestCaseOnlyExecutedItem> testCases = null,
-            List<DeletedReq> delReqs = null ,
-            List<RejectedReq> rejReqs = null,
             List<TestCase> panaTestCases = null,
-            List<Dummy> syrLists = null,
             WorkSheet xlsSheet = null,
             List<HtmlData> htmlDatas = null,
             List<SafetyGoalKLH> safetyGoalKLHs = null)
@@ -36,8 +33,6 @@ namespace TestCaseAnalyzer.App
                 .DistinctBy(htmlData => htmlData.ID)
                 .ToDictionary(htmlData => htmlData.ID);
 
-            this.delReqs = delReqs;
-            this.rejReqs = rejReqs;
             this.panaTestCases = panaTestCases;
             this.XlsSheet = xlsSheet;
 
@@ -53,10 +48,7 @@ namespace TestCaseAnalyzer.App
         public Dictionary<string, Requirement> CurrentRequirementsByID { get; set; }
         public List<HtmlData> HtmlDatas { get; set; }
         public Dictionary<string, HtmlData> HtmlDatasByID { get; set; }
-        public List<DeletedReq> delReqs { get; set; }
-        public List<RejectedReq> rejReqs { get; set; }
         public List<TestCase> panaTestCases { get; set; }
-        public List<Dummy> syrLists { get; set; }
 
         public WorkSheet XlsSheet { get; set; }
         public List<SafetyGoalKLH> SafetyGoalKLHs { get; set; }

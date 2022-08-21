@@ -39,8 +39,10 @@ namespace TestCaseAnalyzer.App
 
             }
 
+            Console.WriteLine("Please enter SW release");
+            string swRelease = Console.ReadLine();
 
-            Console.WriteLine($"*****Car Line: {carLine} Report type: {reportType} *****");
+            Console.WriteLine($"*****Car Line: {carLine} SW Release: {swRelease} Report type: {reportType} *****");
 
 
             DateTime now = DateTime.Now;
@@ -63,7 +65,7 @@ namespace TestCaseAnalyzer.App
                 htmlDatas: htmlReports,
                 safetyGoalKLHs: safetyGoalKLHs);
 
-            FinalReportGenerator.GenerateReport(baseSpec, reportType, carLine);
+            FinalReportGenerator.GenerateReport(baseSpec, reportType, carLine,swRelease);
         }
     }
 }

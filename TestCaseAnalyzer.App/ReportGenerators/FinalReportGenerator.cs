@@ -12,7 +12,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
     internal class FinalReportGenerator
     {
 
-        public static void GenerateReport(SpecParameters spec, string reportType, string carLine)
+        public static void GenerateReport(SpecParameters spec, string reportType, string carLine, string swRelease)
         {
             DateTime now = DateTime.Now;
             Console.WriteLine("***Writing report***");
@@ -35,11 +35,16 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             {
                 reportTypeforFileName = "FusaBasic";
             }
+            if (reportType == "HV")
+            {
+                reportTypeforFileName = "HVRTU";
+            }
 
-            var fileName = $"BMW_CCU_SystemTestReport_SWX_{carLine}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
-            File.Copy("tp.xlsx", fileName);
+            var fileName = $"BMW_CCU_SystemTestReport_SW{swRelease}_{carLine}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
+            var fileNameInOutputPaht = $"..//..//..//Output//{fileName}";
+            File.Copy(FileNames.ReportTemplateFile, fileNameInOutputPaht);
 
-            var workbook = WorkBook.Load(fileName);
+            var workbook = WorkBook.Load(fileNameInOutputPaht);
 
             foreach (var specTC in spec.TestCases)
             {
@@ -83,7 +88,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 }
             }
             WriteTotalSubTCs(workbook);
-            WriteTestIdentification(workbook,spec);
+            WriteTestIdentification(workbook,spec, carLine, swRelease);
             workbook.Save();
             Console.WriteLine("**Report finished : " + now.ToString("F"));
         }
@@ -263,11 +268,12 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             worksheetFunc[$"S8"].Value = $"FAILED: {TotalSubTestCases.funcTotalSubTestcaseFailed}";
         }
 
-        private static void WriteTestIdentification(WorkBook workbook,SpecParameters spec)
+        private static void WriteTestIdentification(WorkBook workbook,SpecParameters spec,string carLine , string swRelease)
         {
             var htmlTC = spec.HtmlDatas.First();
             var worksheet = workbook.GetWorkSheet("Test_Identification");
             worksheet["B19"].Value = htmlTC.HW;
+            worksheet["B23"].Value = $"SW {carLine} {swRelease}";
             worksheet["B25"].Value = htmlTC.BTLD;
             worksheet["B26"].Value = htmlTC.SWFL;
             worksheet["B29"].Value = htmlTC.PIC;

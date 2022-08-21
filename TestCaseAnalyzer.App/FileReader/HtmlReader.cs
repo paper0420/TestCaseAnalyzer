@@ -65,15 +65,12 @@ namespace TestCaseAnalyzer.App.FileReader
                    .SelectSingleNode("table")
                    .SelectNodes("tr")[10]
                    .SelectNodes("td")[1]
-                   .InnerText; 
+                   .InnerText;
                 var dsp = doc.DocumentNode.SelectNodes("//body/div/div")[1]
                    .SelectSingleNode("table")
                    .SelectNodes("tr")[11]
                    .SelectNodes("td")[1]
-                   .InnerText
-                   .Insert(3,".")
-                   .Insert(1,".")
-                   .Insert(0,"0");
+                   .InnerText;
 
                 var pic = doc.DocumentNode.SelectNodes("//body/div/div")[1]
                   .SelectSingleNode("table")
@@ -177,11 +174,14 @@ namespace TestCaseAnalyzer.App.FileReader
                 .Replace("HtmlReportL2\\", "")
                 .Replace(".html", "")
                 .Replace("_report", "")
-                .Replace("_", "-");
+                .Replace("_", "-")
+                .Replace("..\\..\\..\\Input\\","");
             
             var fileName2 = fileName1.Replace("HtmlReportL3\\", "");
             var fileName3 = fileName2.Replace("HtmlReportL1\\", "");
             var fileName = $"#{fileName3}#";
+
+            Console.WriteLine(fileName);
 
             return fileName;
         }
@@ -189,25 +189,25 @@ namespace TestCaseAnalyzer.App.FileReader
         private static string[] GetPathName(string reportType)
         {
             string[] files = null;
-
+            
             switch (reportType)
             {
                 case "HV":
-                    files = Directory.GetFiles(@"HtmlReportL1", "*.html");
+                    files = Directory.GetFiles(FileNames.HtmlReportL1Folder, "*.html");
 
                     break;
 
                 case "Fusa":
-                    string[] htmlFiles1 = Directory.GetFiles(@"HtmlReportL1", "*.html");
-                    string[] htmlFiles2 = Directory.GetFiles(@"HtmlReportL2", "*.html");
+                    string[] htmlFiles1 = Directory.GetFiles(FileNames.HtmlReportL1Folder, "*.html");
+                    string[] htmlFiles2 = Directory.GetFiles(FileNames.HtmlReportL2Folder, "*.html");
                     files = htmlFiles1.Union(htmlFiles2).ToArray();
 
                     break;
 
                 case "Full":
-                    string[] htmlFilesFull1 = Directory.GetFiles(@"HtmlReportL3", "*.html");
-                    string[] htmlFilesFull2 = Directory.GetFiles(@"HtmlReportL2", "*.html");
-                    string[] htmlFilesFull3 = Directory.GetFiles(@"HtmlReportL1", "*.html");
+                    string[] htmlFilesFull1 = Directory.GetFiles(FileNames.HtmlReportL1Folder, "*.html");
+                    string[] htmlFilesFull2 = Directory.GetFiles(FileNames.HtmlReportL2Folder, "*.html");
+                    string[] htmlFilesFull3 = Directory.GetFiles(FileNames.HtmlReportL3Folder, "*.html");
 
                     files = htmlFilesFull1.Union(htmlFilesFull2).Union(htmlFilesFull3).ToArray();
                     break;
