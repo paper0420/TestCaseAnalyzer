@@ -15,7 +15,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         public static void GenerateReport(SpecParameters spec, string reportType, string carLine)
         {
             DateTime now = DateTime.Now;
-            Console.WriteLine("**Writing report**");
+            Console.WriteLine("***Writing report***");
 
             int currentRowFunctionSheet = 21;
             int currentRowFuSiSheet = 21;
@@ -30,8 +30,13 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             TotalSubTestCases.fusiTotalSubTestcaseNotExecuted = 0;
             var checkTCID = new HashSet<string>();
 
+            var reportTypeforFileName = reportType;
+            if (reportType == "Fusa")
+            {
+                reportTypeforFileName = "FusaBasic";
+            }
 
-            var fileName = $"TestReport_{now.ToString("ddHHmmss")}.xlsx";
+            var fileName = $"BMW_CCU_SystemTestReport_SWX_{carLine}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
             File.Copy("tp.xlsx", fileName);
 
             var workbook = WorkBook.Load(fileName);
@@ -62,51 +67,25 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
                         if (writeCheckTest)
                         {
-                            var next = WriteCheckTestCase(spec,
-                                ref currentRowFunctionSheet,
-                                ref currentRowFuSiSheet,
-                                workbook,
-                                specTC,
-                                functionalTestCases,
-                                fusiTestCases);
+                            var htmlTC = spec.HtmlDatasByID.ContainsKey(specTC.ID)
+                                           ? spec.HtmlDatasByID[specTC.ID]
+                                           : null;
 
-                            if (next)
-                            {
-                                checkTCID.Add(specTC.ID);
-                                continue;
-                            }
+                            WriteRequirements(spec, ref currentRowFunctionSheet, ref currentRowFuSiSheet, specTC, htmlTC, workbook,
+                            functionalTestCases, fusiTestCases);
+
+
+                            checkTCID.Add(specTC.ID);
+                            continue;
+
                         }
                     }
-
                 }
-               
-
             }
-
-            //workbook.EvaluateAll();
+            WriteTotalSubTCs(workbook);
+            WriteTestIdentification(workbook,spec);
             workbook.Save();
             Console.WriteLine("**Report finished : " + now.ToString("F"));
-
-        }
-
-        private static bool WriteCheckTestCase(
-            SpecParameters spec,
-            ref int currentRowFunctionSheet,
-            ref int currentRowFuSiSheet,
-            WorkBook workbook,
-            TestCaseOnlyExecutedItem specTC,
-            HashSet<string> functionalTestCases,
-            HashSet<string> fusiTestCases)
-        {
-            var htmlTC = spec.HtmlDatasByID.ContainsKey(specTC.ID)
-                ? spec.HtmlDatasByID[specTC.ID]
-                : null;
-
-                WriteRequirements(spec, ref currentRowFunctionSheet, ref currentRowFuSiSheet, specTC, htmlTC, workbook,
-                functionalTestCases, fusiTestCases);
-
-                return true;
-
         }
 
         private static void WriteRequirements(SpecParameters spec,
@@ -135,11 +114,9 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
                     if (klhID.FusaType?.Contains("ASIL", "QM", "n.a.", "SR") == true)
                     {
-
-                            var worksheet = workbook.GetWorkSheet("FuSi");
-                            WriteRow(spec, currentRowFuSiSheet, htmlTC, specTC, klhID, worksheet);
-                            currentRowFuSiSheet++;
-
+                        var worksheet = workbook.GetWorkSheet("FuSi");
+                        WriteRow(spec, currentRowFuSiSheet, htmlTC, specTC, klhID, worksheet);
+                        currentRowFuSiSheet++;
 
                         if (!fusiTestCases.Contains(specTC.ID))
                         {
@@ -150,11 +127,9 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     }
                     else
                     {
-
-                            var worksheet = workbook.GetWorkSheet("Functional");
-                            WriteRow(spec, currentRowFunctionSheet, htmlTC, specTC, klhID, worksheet);
-                            currentRowFunctionSheet++;
-
+                        var worksheet = workbook.GetWorkSheet("Functional");
+                        WriteRow(spec, currentRowFunctionSheet, htmlTC, specTC, klhID, worksheet);
+                        currentRowFunctionSheet++;
 
                         if (!functionalTestCases.Contains(specTC.ID))
                         {
@@ -162,34 +137,11 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                         }
 
                         functionalTestCases.Add(specTC.ID);
-
                     }
-
                 }
-
             }
-
-            WriteTotalSubTCs(workbook);
-
+            
         }
-
-        private static void WriteTotalSubTCs(WorkBook workbook)
-        {
-            var worksheetFusi = workbook.GetWorkSheet("FuSi");
-            var worksheetFunc = workbook.GetWorkSheet("Functional");
-
-            worksheetFusi[$"S5"].Value = $"Not Executed: {TotalSubTestCases.fusiTotalSubTestcaseNotExecuted}";
-            worksheetFusi[$"S6"].Value = $"PASSED: {TotalSubTestCases.fusiTotalSubTestcasePassed}";
-            worksheetFusi[$"S8"].Value = $"FAILED: {TotalSubTestCases.fusiTotalSubTestcaseFailed}";
-
-
-            worksheetFunc[$"S5"].Value = $"Not Executed: {TotalSubTestCases.funcTotalSubTestcaseNotExecuted}";
-            worksheetFunc[$"S6"].Value = $"PASSED: {TotalSubTestCases.funcTotalSubTestcasePassed}";
-            worksheetFunc[$"S8"].Value = $"FAILED: {TotalSubTestCases.funcTotalSubTestcaseFailed}";
-
-
-        }
-
 
         private static void CalculateTotalSubTCsforFusiSheet(TestCaseOnlyExecutedItem specTC, HtmlData htmlTC)
         {
@@ -224,10 +176,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
         {
             if (htmlTC != null)
             {
-
                 worksheet[$"R{currentRow}"].Value = htmlTC.TotalTestResult;
-                worksheet[$"R{currentRow}"].Style.SetBackgroundColor(ColorCodes.Green);
-
                 worksheet[$"U{currentRow}"].Value = htmlTC.NumberOfPassed;
                 worksheet[$"W{currentRow}"].Value = htmlTC.NumberOfFailed;
                 worksheet[$"X{currentRow}"].Value = htmlTC.NumberOfNotExecuted;
@@ -238,9 +187,14 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     worksheet[$"R{currentRow}"].Style.SetBackgroundColor(ColorCodes.Red);
                 }
 
+                if (htmlTC.TotalTestResult == "PASSED" && (htmlTC.NumberOfNotExecuted > 0 || htmlTC.NumberOfFailed > 0))
+                {
+                    worksheet[$"Q{currentRow}"].Value = specTC.Comment;
+                }
+
             }
-            
-            if(htmlTC == null)
+
+            if (htmlTC == null)
             {
                 if (specTC.Result == "OBSOLETE")
                 {
@@ -295,8 +249,31 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
         }
 
+        private static void WriteTotalSubTCs(WorkBook workbook)
+        {
+            var worksheetFusi = workbook.GetWorkSheet("FuSi");
+            var worksheetFunc = workbook.GetWorkSheet("Functional");
 
+            worksheetFusi[$"S5"].Value = $"Not Executed: {TotalSubTestCases.fusiTotalSubTestcaseNotExecuted}";
+            worksheetFusi[$"S6"].Value = $"PASSED: {TotalSubTestCases.fusiTotalSubTestcasePassed}";
+            worksheetFusi[$"S8"].Value = $"FAILED: {TotalSubTestCases.fusiTotalSubTestcaseFailed}";
 
+            worksheetFunc[$"S5"].Value = $"Not Executed: {TotalSubTestCases.funcTotalSubTestcaseNotExecuted}";
+            worksheetFunc[$"S6"].Value = $"PASSED: {TotalSubTestCases.funcTotalSubTestcasePassed}";
+            worksheetFunc[$"S8"].Value = $"FAILED: {TotalSubTestCases.funcTotalSubTestcaseFailed}";
+        }
+
+        private static void WriteTestIdentification(WorkBook workbook,SpecParameters spec)
+        {
+            var htmlTC = spec.HtmlDatas.First();
+            var worksheet = workbook.GetWorkSheet("Test_Identification");
+            worksheet["B19"].Value = htmlTC.HW;
+            worksheet["B25"].Value = htmlTC.BTLD;
+            worksheet["B26"].Value = htmlTC.SWFL;
+            worksheet["B29"].Value = htmlTC.PIC;
+            worksheet["B30"].Value = htmlTC.DSP;
+
+        }
 
 
 
