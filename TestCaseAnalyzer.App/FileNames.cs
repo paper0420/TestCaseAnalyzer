@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace TestCaseAnalyzer.App
 {
     public static class FileNames
     {
+        private static readonly string InputFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Input");
+        public static readonly string OutputFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Output");
+
         public const string KlhFile = "KLH11_BL1.xlsx";
-        public const string TestSpecFile = @"..\..\..\FinalReportGeneration\Input\Specification_V05.xlsx";
-        public const string ReportTemplateFile = @"..\..\..\Input\Template.xlsx";
-        public const string HtmlReportL1Folder = @"..\..\..\Input\HtmlReportL1";
-        public const string HtmlReportL2Folder = @"..\..\..\Input\HtmlReportL2";
-        public const string HtmlReportL3Folder = @"..\..\..\Input\HtmlReportL3";
-
-
+        public static readonly string TestSpecFile = Path.GetFullPath("Specification_V05.xlsx", InputFolder);
+        public static readonly string ReportTemplateFile = Path.GetFullPath("Template.xlsx", InputFolder);
+        public static readonly string HtmlReportL1Folder = Path.GetFullPath("HtmlReportL1", InputFolder);
+        public static readonly string HtmlReportL2Folder = Path.GetFullPath("HtmlReportL2", InputFolder);
+        public static readonly string HtmlReportL3Folder = Path.GetFullPath("HtmlReportL3", InputFolder);
     }
-
 }

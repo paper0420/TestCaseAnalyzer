@@ -41,7 +41,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             }
 
             var fileName = $"BMW_CCU_SystemTestReport_SW{swRelease}_{carLine}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
-            var fileNameInOutputPaht = $"..//..//..//Output//{fileName}";
+            var fileNameInOutputPaht = Path.GetFullPath(fileName, FileNames.OutputFolder);
             File.Copy(FileNames.ReportTemplateFile, fileNameInOutputPaht);
 
             var workbook = WorkBook.Load(fileNameInOutputPaht);
