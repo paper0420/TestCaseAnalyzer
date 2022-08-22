@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TestCaseAnalyzer.App.Domain;
 using System.IO;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace TestCaseAnalyzer.App.ReportGenerators
 {
@@ -45,6 +47,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             File.Copy(FileNames.ReportTemplateFile, fileNameInOutputPaht);
 
             var workbook = WorkBook.Load(fileNameInOutputPaht);
+   
 
             foreach (var specTC in spec.TestCases)
             {
@@ -88,10 +91,14 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 }
             }
             WriteTotalSubTCs(workbook);
-            WriteTestIdentification(workbook,spec, carLine, swRelease);
+            //WriteTestIdentification(workbook,spec, carLine, swRelease);
+            //WriteTestIden(wb, spec, carLine, swRelease);
+            //wb.Save();
             workbook.Save();
+
             Console.WriteLine("**Report finished : " + now.ToString("F"));
         }
+
 
         private static void WriteRequirements(SpecParameters spec,
             ref int currentRowFunctionSheet,
@@ -279,6 +286,20 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             worksheet["B29"].Value = htmlTC.PIC;
             worksheet["B30"].Value = htmlTC.DSP;
 
+        }
+
+        private static void WriteTestIden(XLWorkbook wb, SpecParameters spec, string carLine, string swRelease)
+        {
+            var htmlTC = spec.HtmlDatas.First();
+
+            var worksheet = wb.Worksheet("Test_Identification");
+            worksheet.Cell("B19").Value = htmlTC.HW;
+            worksheet.Cell("B23").Value = $"SW { carLine} {swRelease}";
+            worksheet.Cell("B25").Value = htmlTC.BTLD;
+            worksheet.Cell("B25").Value = htmlTC.BTLD;
+            worksheet.Cell("B26").Value = htmlTC.SWFL;
+            worksheet.Cell("B29").Value = htmlTC.PIC;
+            worksheet.Cell("B30").Value = htmlTC.DSP;
         }
 
 

@@ -1,4 +1,5 @@
-﻿using IronXL;
+﻿using ClosedXML.Excel;
+using IronXL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +13,14 @@ namespace TestCaseAnalyzer.App
     {
         public static void RunMyApp(string newFile, string currentFile)
         {
+            var wb = new XLWorkbook("tp.xlsx");
+            var ws = wb.Worksheet("FuSi");
+            ws.Cell("A1").Value = "AAAA";
+            wb.Save();
+            return;
+
+
+
             List<string> carLineNames = new List<string>{"G60","G70","I20","G26","G28", "G08LCI", "U11" };
             Console.WriteLine("Please enter car line name");
             Console.WriteLine("G60 , G70, I20 , G26 , G28 , G08LCI , U11");
@@ -67,5 +76,12 @@ namespace TestCaseAnalyzer.App
 
             FinalReportGenerator.GenerateReport(baseSpec, reportType, carLine,swRelease);
         }
+
+
+
+
+
+
+
     }
 }

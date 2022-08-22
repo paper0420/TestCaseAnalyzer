@@ -95,9 +95,9 @@ namespace TestCaseAnalyzer.App.FileReader
 
                 if (expectedTestCaseId != testCaseID)
                 {
-                    Console.WriteLine($"File name {expectedTestCaseId} and HTML header {testCaseID} are mismatch");
+                    Console.WriteLine($"File name and HTML header {testCaseID} are mismatch");
                     Console.WriteLine($"Window Login Name: {location}");
-                    testCaseID = expectedTestCaseId;
+
                 }
 
                 if (processed.Contains(testCaseID))
@@ -181,7 +181,7 @@ namespace TestCaseAnalyzer.App.FileReader
             var fileName3 = fileName2.Replace("HtmlReportL1\\", "");
             var fileName = $"#{fileName3}#";
 
-            Console.WriteLine(fileName);
+            //Console.WriteLine(fileName);
 
             return fileName;
         }

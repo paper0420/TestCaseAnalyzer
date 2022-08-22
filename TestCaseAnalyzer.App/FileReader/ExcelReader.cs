@@ -13,8 +13,8 @@ namespace TestCaseAnalyzer.App.FileReader
             int rowNumber,
             Func<IExcelDataReader, ExcelColumnReader, T> func)
         {
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            Console.WriteLine(file);
+            //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            //Console.WriteLine(file);
             //file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file));
             //Console.WriteLine(file);
 
