@@ -15,17 +15,11 @@ namespace TestCaseAnalyzer.App.FileReader
         public static IEnumerable<HtmlData> ReadHtmlFullReport(string reportType)
         {
             var files = GetPathName(reportType);
-
             Console.WriteLine("***Collecting data from HTML reports**");
-
             var processed = new HashSet<string>();
-
-
             foreach (var file in files)
             {
-
                 var path = file;
-
                 var doc = new HtmlDocument();
                 doc.Load(path);
 
@@ -95,8 +89,9 @@ namespace TestCaseAnalyzer.App.FileReader
 
                 if (expectedTestCaseId != testCaseID)
                 {
-                    Console.WriteLine($"File name and HTML header {testCaseID} are mismatch");
+                    Console.WriteLine($"File name {expectedTestCaseId} and HTML header {testCaseID} are mismatch");
                     Console.WriteLine($"Window Login Name: {location}");
+                    testCaseID = expectedTestCaseId;
 
                 }
 
@@ -170,19 +165,8 @@ namespace TestCaseAnalyzer.App.FileReader
 
         private static string GetFileLabel(string file)
         {
-            var fileName1 = file
-                .Replace("HtmlReportL2\\", "")
-                .Replace(".html", "")
-                .Replace("_report", "")
-                .Replace("_", "-")
-                .Replace("..\\..\\..\\Input\\","");
-            
-            var fileName2 = fileName1.Replace("HtmlReportL3\\", "");
-            var fileName3 = fileName2.Replace("HtmlReportL1\\", "");
-            var fileName = $"#{fileName3}#";
-
-            //Console.WriteLine(fileName);
-
+            var file1 = Path.GetFileNameWithoutExtension(file).Replace("_report","").Replace("_","-");
+            var fileName = $"#{file1}#";
             return fileName;
         }
 

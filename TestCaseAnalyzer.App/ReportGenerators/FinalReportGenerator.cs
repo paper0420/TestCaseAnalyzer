@@ -47,7 +47,6 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             var fileNameInOutputPaht = Path.GetFullPath(fileName, FileNames.OutputFolder);
             File.Copy(FileNames.ReportTemplateFile, fileNameInOutputPaht);
 
-            //var workbook = WorkBook.Load(fileNameInOutputPaht);
 
             var openSettings = new OpenSettings()
             {
@@ -109,58 +108,8 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 WriteTotalSubTCs(workbook);
                 WriteTestIdentification(workbook,spec, carLine, swRelease);
                 workbook.Save();
-
                 Console.WriteLine("**Report finished : " + now.ToString("F"));
             }
-
-            //foreach (var specTC in spec.TestCases)
-            //{
-            //    if (!checkTCID.Contains(specTC.ID))
-            //    {
-            //        if (specTC.Carline.Contains(carLine))
-            //        {
-            //            var writeCheckTest = false;
-
-            //            if (reportType == "Fusa" && (specTC.Type.Contains("L1") || specTC.Type.Contains("L2")))
-            //            {
-
-            //                writeCheckTest = true;
-            //            }
-
-            //            if (reportType == "HV" && specTC.Type.Contains("L1"))
-            //            {
-            //                writeCheckTest = true;
-            //            }
-
-            //            if (reportType == "Full")
-            //            {
-            //                writeCheckTest = true;
-            //            }
-
-            //            if (writeCheckTest)
-            //            {
-            //                var htmlTC = spec.HtmlDatasByID.ContainsKey(specTC.ID)
-            //                               ? spec.HtmlDatasByID[specTC.ID]
-            //                               : null;
-
-            //                WriteRequirements(spec, ref currentRowFunctionSheet, ref currentRowFuSiSheet, specTC, htmlTC, workbook,
-            //                functionalTestCases, fusiTestCases);
-
-
-            //                checkTCID.Add(specTC.ID);
-            //                continue;
-
-            //            }
-            //        }
-            //    }
-            //}
-            ////WriteTotalSubTCs(workbook);
-            ////WriteTestIdentification(workbook,spec, carLine, swRelease);
-            ////WriteTestIden(wb, spec, carLine, swRelease);
-            ////wb.Save();
-            //workbook.Save();
-
-            //Console.WriteLine("**Report finished : " + now.ToString("F"));
         }
 
 
@@ -341,7 +290,17 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
             if (htmlTC != null)
             {
-                worksheet.Cell($"R{currentRow}").Value = htmlTC.TotalTestResult;
+                if(htmlTC.TotalTestResult == "PASSED" && specTC.Result.Contains("JUSTIFIED"))
+                {              
+                    worksheet.Cell($"R{currentRow}").Value = "JUSTIFIED";
+                    worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
+                    //worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.FromArgb(0x548235);
+                }
+                else
+                {
+                    worksheet.Cell($"R{currentRow}").Value = htmlTC.TotalTestResult;
+                }
+                
                 worksheet.Cell($"U{currentRow}").Value = htmlTC.NumberOfPassed;
                 worksheet.Cell($"W{currentRow}").Value = htmlTC.NumberOfFailed;
                 worksheet.Cell($"X{currentRow}").Value = htmlTC.NumberOfNotExecuted;
@@ -349,7 +308,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 if (htmlTC.TotalTestResult == "FAILED")
                 {
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
-                    //worksheet.Cell($"R{currentRow}").Style.SetBackgroundColor(ColorCodes.Red);
+                    //worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.Red;
                 }
 
                 if (htmlTC.TotalTestResult == "PASSED" && (htmlTC.NumberOfNotExecuted > 0 || htmlTC.NumberOfFailed > 0))
@@ -363,13 +322,14 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             {
                 if (specTC.Result == "OBSOLETE")
                 {
-                    //worksheet.Cell($"R{currentRow}").Style.SetBackgroundColor(ColorCodes.Grey);
+                    worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.AshGrey;
                     worksheet.Cell($"R{currentRow}").Value = specTC.Result;
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
                 }
                 else if(specTC.Result.Contains("NOT TESTABLE"))
                 {
                     worksheet.Cell($"R{currentRow}").Value = "NOT TESTABLE";
+                    //worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.FromArgb(0xFFC000);
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
                 }
                 else
