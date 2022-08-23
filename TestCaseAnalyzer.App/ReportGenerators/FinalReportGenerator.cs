@@ -250,7 +250,6 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 {
                     worksheet.Cell($"R{currentRow}").Value = "No HTML and Reviewed Needed";
                 }
-
             }
 
             worksheet.Cell($"A{currentRow}").Value = "MicroFuzzy";
@@ -274,9 +273,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             worksheet.Cell($"AA{currentRow}").Value = specTC.TestCatBasic;
             worksheet.Cell($"AB{currentRow}").Value = specTC.TestCatFusa;
             worksheet.Cell($"AC{currentRow}").Value = specTC.TestCatFunc;
-            worksheet.Cell($"AD{currentRow}").Value = specTC.TestCatFull;
-
-
+            worksheet.Cell($"AD{currentRow}").Value = specTC.TestCatFull;           
 
             if (worksheet.Name == "FuSi")
             {
@@ -289,9 +286,9 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     }
                 }
 
+                worksheet.Cell($"Y{currentRow}").Value = "x";
+
             }
-
-
         }
 
         private static void WriteTotalSubTCs(XLWorkbook workbook)
