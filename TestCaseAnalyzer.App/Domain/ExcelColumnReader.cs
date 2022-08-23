@@ -88,6 +88,7 @@ namespace TestCaseAnalyzer.App
             this.PanaStatusIndex = GetIndexNumber(reader, "A_Pana Status");
             this.KLHEAS_ASILIndex = GetIndexNumber(reader, "EAS_ASIL");
             this.VerificationSpecStatusIndex = GetIndexNumber(reader, "A_Verification_Specification_Status");
+            this.VerificationMeasureIndex = GetIndexNumber(reader, "A_Verification_Measure");
 
         }
 
@@ -134,6 +135,7 @@ namespace TestCaseAnalyzer.App
         public int PanaStatusIndex { get; set; }
         public int KLHEAS_ASILIndex { get; set; }
         public int VerificationSpecStatusIndex { get; private set; }
+        public int VerificationMeasureIndex { get; private set; }
         public string VerificationMeasure { get; set; }
         public string Type { get; set; }
         public int SGKLHID { get; private set; }

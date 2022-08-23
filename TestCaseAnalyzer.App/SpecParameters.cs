@@ -28,10 +28,16 @@ namespace TestCaseAnalyzer.App
                 .ToDictionary(curRequirement => curRequirement.ID);
 
             this.HtmlDatas = htmlDatas;
-            this.HtmlDatasByID = htmlDatas
+
+            if(htmlDatas != null)
+            {
+                this.HtmlDatasByID = htmlDatas
                 .Where(htmlData => htmlData.ID != null)
                 .DistinctBy(htmlData => htmlData.ID)
                 .ToDictionary(htmlData => htmlData.ID);
+
+            }
+
 
             this.panaTestCases = panaTestCases;
             this.XlsSheet = xlsSheet;

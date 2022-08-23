@@ -139,10 +139,8 @@ namespace TestCaseAnalyzer.App.ReportGenerators
 
                     if (klhID.FusaType?.Contains("ASIL", "QM", "n.a.", "SR") == true)
                     {
-                        //var worksheet = workbook.GetWorkSheet("FuSi");
-                        //WriteRow(spec, currentRowFuSiSheet, htmlTC, specTC, klhID, worksheet);
-                        var worksheet = workbook.Worksheet("FuSi");
 
+                        var worksheet = workbook.Worksheet("FuSi");
                         WriteRow(spec, currentRowFuSiSheet, htmlTC, specTC, klhID, worksheet);
                         currentRowFuSiSheet++;
 
@@ -155,8 +153,6 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     }
                     else
                     {
-                        //var worksheet = workbook.GetWorkSheet("Functional");
-                        //WriteRow(spec, currentRowFunctionSheet, htmlTC, specTC, klhID, worksheet);
                         var worksheet = workbook.Worksheet("Functional");
                         WriteRow(spec, currentRowFunctionSheet, htmlTC, specTC, klhID, worksheet);
 
@@ -195,88 +191,6 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 TotalSubTestCases.funcTotalSubTestcaseNotExecuted += htmlTC.NumberOfNotExecuted;
 
             }
-
-        }
-
-        private static void WriteRowOld(SpecParameters spec,
-            int currentRow,
-            HtmlData htmlTC,
-            TestCaseOnlyExecutedItem specTC,
-            Requirement klhID,
-            WorkSheet worksheet)
-        {
-            if (htmlTC != null)
-            {
-                worksheet[$"R{currentRow}"].Value = htmlTC.TotalTestResult;
-                worksheet[$"U{currentRow}"].Value = htmlTC.NumberOfPassed;
-                worksheet[$"W{currentRow}"].Value = htmlTC.NumberOfFailed;
-                worksheet[$"X{currentRow}"].Value = htmlTC.NumberOfNotExecuted;
-
-                if (htmlTC.TotalTestResult == "FAILED")
-                {
-                    worksheet[$"Q{currentRow}"].Value = specTC.Comment;
-                    worksheet[$"R{currentRow}"].Style.SetBackgroundColor(ColorCodes.Red);
-                }
-
-                if (htmlTC.TotalTestResult == "PASSED" && (htmlTC.NumberOfNotExecuted > 0 || htmlTC.NumberOfFailed > 0))
-                {
-                    worksheet[$"Q{currentRow}"].Value = specTC.Comment;
-                }
-
-            }
-
-            if (htmlTC == null)
-            {
-                if (specTC.Result == "OBSOLETE")
-                {
-                    worksheet[$"R{currentRow}"].Style.SetBackgroundColor(ColorCodes.Grey);
-                    worksheet[$"R{currentRow}"].Value = specTC.Result;
-                }
-                else
-                {
-                    worksheet[$"R{currentRow}"].Value = "No HTML and Reviewed Needed";
-                }
-
-            }
-
-            worksheet[$"A{currentRow}"].Value = "MicroFuzzy";
-            worksheet[$"B{currentRow}"].Value = specTC.ItemClass1;
-            worksheet[$"C{currentRow}"].Value = specTC.ItemClass2;
-            worksheet[$"D{currentRow}"].Value = specTC.ItemClass3;
-            worksheet[$"H{currentRow}"].Value = specTC.ID;
-
-
-            worksheet[$"I{currentRow}"].Value = specTC.Objective;
-            worksheet[$"J{currentRow}"].Value = specTC.Type;
-
-            worksheet[$"K{currentRow}"].Value = klhID.ID;
-            worksheet[$"M{currentRow}"].Value = klhID.ID;
-            worksheet[$"N{currentRow}"].Value = "11kW Big";
-
-            worksheet[$"O{currentRow}"].Value = specTC.VerificationMethod;
-            worksheet[$"P{currentRow}"].Value = klhID.VerificationSpecStatus;
-
-            worksheet[$"Z{currentRow}"].Value = specTC.TestCatHV;
-            worksheet[$"AA{currentRow}"].Value = specTC.TestCatBasic;
-            worksheet[$"AB{currentRow}"].Value = specTC.TestCatFusa;
-            worksheet[$"AC{currentRow}"].Value = specTC.TestCatFunc;
-            worksheet[$"AD{currentRow}"].Value = specTC.TestCatFull;
-
-
-
-            if (worksheet.Name == "FuSi")
-            {
-                foreach (var sg in spec.SafetyGoalKLHs)
-                {
-                    if (sg.ID == klhID.ID)
-                    {
-                        worksheet[$"L{currentRow}"].Value = sg.SG;
-                        break;
-                    }
-                }
-
-            }
-
 
         }
 
@@ -392,19 +306,6 @@ namespace TestCaseAnalyzer.App.ReportGenerators
             worksheetFunc.Cell($"S5").Value = $"Not Executed: {TotalSubTestCases.funcTotalSubTestcaseNotExecuted}";
             worksheetFunc.Cell($"S6").Value = $"PASSED: {TotalSubTestCases.funcTotalSubTestcasePassed}";
             worksheetFunc.Cell($"S8").Value = $"FAILED: {TotalSubTestCases.funcTotalSubTestcaseFailed}";
-        }
-
-        private static void WriteTestIdentificationOld(WorkBook workbook, SpecParameters spec, string carLine, string swRelease)
-        {
-            var htmlTC = spec.HtmlDatas.First();
-            var worksheet = workbook.GetWorkSheet("Test_Identification");
-            worksheet["B19"].Value = htmlTC.HW;
-            worksheet["B23"].Value = $"SW {carLine} {swRelease}";
-            worksheet["B25"].Value = htmlTC.BTLD;
-            worksheet["B26"].Value = htmlTC.SWFL;
-            worksheet["B29"].Value = htmlTC.PIC;
-            worksheet["B30"].Value = htmlTC.DSP;
-
         }
 
         private static void WriteTestIdentification(XLWorkbook workbook, SpecParameters spec, string carLine, string swRelease)
