@@ -27,10 +27,11 @@ namespace TestCaseAnalyzer.App
                         GetSafetyGoalSheetIndex(reader);
                         break;
 
-                    case "KLH_BL11.1":
+                    case "KLH":
                         GetKLHFileIndex(reader);
                         break;
-                        default:
+
+                    default:
                         throw new($"Unknown sheet name '{sheet}'.");
 
                 }

@@ -25,7 +25,7 @@ namespace TestCaseAnalyzer.App.FileReader
 
                     do
                     {
-                        if (reader.Name == sheet)
+                        if (reader.Name == sheet || reader.Name.Contains(sheet))
                         {
                             if (rowNumber != 1)
                             {
@@ -69,7 +69,7 @@ namespace TestCaseAnalyzer.App.FileReader
 
                     do
                     {
-                        if (reader.Name == sheet)
+                        if (reader.Name == sheet || reader.Name.Contains(sheet))
                         {
                             if (rowNumber != 1)
                             {
