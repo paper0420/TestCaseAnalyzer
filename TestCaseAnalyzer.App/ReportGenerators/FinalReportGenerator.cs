@@ -1,13 +1,9 @@
-﻿using IronXL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestCaseAnalyzer.App.Domain;
 using System.IO;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Packaging;
 
 namespace TestCaseAnalyzer.App.ReportGenerators
@@ -68,13 +64,12 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 {
                     if (!checkTCID.Contains(specTC.ID))
                     {
-                        if (specTC.Carline.Contains(carLine))
+                        if (specTC.Carlines.Contains(carLine))
                         {
                             var writeCheckTest = false;
 
                             if (reportType == "Fusa" && (specTC.Type.Contains("L1") || specTC.Type.Contains("L2")))
                             {
-
                                 writeCheckTest = true;
                             }
 

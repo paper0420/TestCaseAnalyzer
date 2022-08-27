@@ -1,4 +1,7 @@
-﻿namespace TestCaseAnalyzer.App
+﻿using ExcelDataReader;
+using TestCaseAnalyzer.App.FileReader;
+
+namespace TestCaseAnalyzer.App
 {
     public static class Extensions
     {
@@ -28,6 +31,11 @@
             }
 
             return false;
+        }
+
+        public static string GetValueAsString(this IExcelDataReader reader, Header header, string columnName)
+        {
+            return reader.GetValue(header.GetColumnIndex(columnName))?.ToString();
         }
     }
 }

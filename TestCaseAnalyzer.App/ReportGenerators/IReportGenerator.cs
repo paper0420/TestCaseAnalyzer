@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TestCaseAnalyzer.App.ReportGenerators
+﻿namespace TestCaseAnalyzer.App.ReportGenerators
 {
     public interface IReportGenerator
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TestCaseAnalyzer.App.Domain
+﻿namespace TestCaseAnalyzer.App.Domain
 {
     public class HtmlData
     {

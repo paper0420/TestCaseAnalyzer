@@ -1,17 +1,17 @@
 ﻿using ExcelDataReader;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using TestCaseAnalyzer.App.FileReader;
 
 namespace TestCaseAnalyzer.App
 {
     public class TestCaseOnlyExecutedItem
     {
-        public TestCaseOnlyExecutedItem(IExcelDataReader reader, ExcelColumnReader index)
+        public TestCaseOnlyExecutedItem(IExcelDataReader reader, Header header)
         {
-            this.ID = reader.GetValue(index.TestcaseSpecIDIndex)?.ToString();
-            this.Objective = reader.GetString(index.TestcaseSpecObjectiveIndex);
-            var idsAsString = reader.GetValue(index.TestcaseSpecRequirementIndex)?
+            this.ID = reader.GetValue(header.GetColumnIndex("Test Case ID"))?.ToString();
+            this.Objective = reader.GetString(header.GetColumnIndex("Test objective"));
+            var idsAsString = reader.GetValue(header.GetColumnIndex("Current KLH"))?
                 .ToString()?
                 .Split('\n') ?? new string[0];
 
@@ -40,74 +40,60 @@ namespace TestCaseAnalyzer.App
 
             this.RequirementIDs = requirementIds.ToArray();
             this.EpicIDs = epicIds.ToArray();
-     
 
+            this.Carlines = GetAvailableCarlines(
+                    reader,
+                    header,
+                    "G70", "G60", "G08LCI", "G26", "G28", "I20", "U11")
+                .ToList();
+            
+            this.Type = reader.GetValue(header.GetColumnIndex("Type"))?.ToString();
+            this.Result = reader.GetValue(header.GetColumnIndex("Result"))?.ToString()?.Replace("\n", " ");
 
-            this.G70 = GetCarline(reader, index.TestcaseSpecG70Index, "G70");
-            this.G60 = GetCarline(reader, index.TestcaseSpecG60Index, "G60");
-            this.G08LCI = GetCarline(reader, index.TestcaseSpecG08LCIIndex, "G08LCI");
-            this.G26 = GetCarline(reader, index.TestcaseSpecG26Index, "G26");
-            this.G28 = GetCarline(reader, index.TestcaseSpecG28Index, "G28");
-            this.I20 = GetCarline(reader, index.TestcaseSpecI20Index, "I20");
-            this.U11 = GetCarline(reader, index.TestcaseSpecU11Index, "U11");
+            this.ItemClass1 = reader.GetString(header.GetColumnIndex("Class1"));
+            this.ItemClass2 = reader.GetString(header.GetColumnIndex("Class2"));
+            this.ItemClass3 = reader.GetString(header.GetColumnIndex("Class3"));
 
+            this.Comment = reader.GetValue(header.GetColumnIndex("Comment"))?.ToString();
 
-            this.Carline = $"{this.G70},{this.G60}, {this.G08LCI},{this.G26}, {this.G28}, {this.I20}, {this.U11}";
-
-            this.Type = reader.GetValue(index.TestcaseSpecTypeIndex)?.ToString();
-            this.Result = reader.GetValue(index.TestcaseSpecResultIndex)?.ToString().Replace("\n", " ");
-
-            this.ItemClass1 = reader.GetString(index.TestcaseSpecClass1Index);
-            this.ItemClass2 = reader.GetString(index.TestcaseSpecClass2Index);
-            this.ItemClass3 = reader.GetString(index.TestcaseSpecClass3Index);
-
-            this.Comment = reader.GetValue(index.TestcaseSpecCommentIndex)?.ToString();
-
-            this.VerificationMethod = reader.GetValue(index.VerificationMethodIndex)?.ToString();
-            this.TestCatHV = reader.GetValue(index.TestCatHVIndex)?.ToString();
-            this.TestCatBasic = reader.GetValue(index.TestCatHVIndex)?.ToString();
-            this.TestCatFusa = reader.GetValue(index.TestCatFusaIndex)?.ToString();
-            this.TestCatFunc = reader.GetValue(index.TestCatFuncIndex)?.ToString();
-            this.TestCatFull = reader.GetValue(index.TestCatFullIndex)?.ToString();
-
-
-
-
+            this.VerificationMethod = reader.GetValue(header.GetColumnIndex("Verification Method"))?.ToString();
+            this.TestCatHV = reader.GetValue(header.GetColumnIndex("TestCat-HV"))?.ToString();
+            this.TestCatBasic = reader.GetValue(header.GetColumnIndex("TestCat-HV"))?.ToString();
+            this.TestCatFusa = reader.GetValue(header.GetColumnIndex("TestCat-Fusa"))?.ToString();
+            this.TestCatFunc = reader.GetValue(header.GetColumnIndex("TestCat-Func"))?.ToString();
+            this.TestCatFull = reader.GetValue(header.GetColumnIndex("TestCat-Full"))?.ToString();
         }
 
-        private static string GetCarline(IExcelDataReader reader, int index,string carlineName)
+        public IList<string> Carlines { get; }
+
+        private static IEnumerable<string> GetAvailableCarlines(
+            IExcelDataReader reader,
+            Header header,
+            params string[] columnNames)
         {
-            var checkCarline = reader.GetValue(index)?.ToString();
-            if(checkCarline != null)
+            foreach (var columnName in columnNames)
             {
-                if (checkCarline.Contains("X"))
+                var columnIndex = header.GetColumnIndex(columnName);
+            
+                var contains = reader.GetValue(columnIndex)?.ToString()?.Contains("X") == true;
+
+                if (contains)
                 {
-                    checkCarline = carlineName;
-                    return checkCarline;
+                    yield return columnName;
                 }
-
             }
-
-            return "No";
         }
 
         public string ID { get; }
         public string[] RequirementIDs { get; }
         public string[] EpicIDs { get; }
-        public string G70 { get; }
-        public string G60 { get; }
-        public string G08LCI { get; }
-        public string G26 { get; }
-        public string G28 { get; }
-        public string I20 { get; }
-        public string U11 { get; }
+        
         public string Type { get; }
         public string Result { get; }
         public string Objective { get; }
         public string ItemClass1 { get; }
         public string ItemClass2 { get; }
         public string ItemClass3 { get; }
-        public string Carline { get; }
         public string Comment { get; }
         public string VerificationMethod { get; }
         public string TestCatHV { get; }
@@ -115,9 +101,5 @@ namespace TestCaseAnalyzer.App
         public string TestCatFusa { get; }
         public string TestCatFunc { get; }
         public string TestCatFull { get; }
-
-
-
-
     }
 }

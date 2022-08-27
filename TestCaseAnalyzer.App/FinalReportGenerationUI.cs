@@ -1,49 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestCaseAnalyzer.App
 {
     public class FinalReportGenerationUI
     {
-        public FinalReportGenerationUI()
+        public static FinalReportGenerationUI ReadDataFromConsole(List<string> lineNames)
         {
-            List<string> carLineNames = new List<string> { "G60", "G70", "I20", "G26", "G28", "G08LCI", "U11" };
             Console.WriteLine("Please enter car line name");
             Console.WriteLine("G60 , G70, I20 , G26 , G28 , G08LCI , U11");
             Console.Write("Enter Car Line: ");
-            this.CarLine = Console.ReadLine();
+            
+            var report = new FinalReportGenerationUI();
+            report.CarLine = Console.ReadLine();
 
-            while (!carLineNames.Contains(this.CarLine))
+            while (!lineNames.Contains(report.CarLine))
             {
-                Console.WriteLine($"This car line {this.CarLine} is not available.");
+                Console.WriteLine($"This car line {report.CarLine} is not available.");
                 Console.Write("Enter Car Line: ");
-                this.CarLine = Console.ReadLine();
-
+                report.CarLine = Console.ReadLine();
             }
 
             List<string> reportNames = new List<string> { "HV", "Fusa", "Full" };
             Console.WriteLine("Please enter report type");
             Console.WriteLine("HV , Fusa , Full");
             Console.Write("Enter report type: ");
-            this.ReportType = Console.ReadLine();
-            while (!reportNames.Contains(this.ReportType))
+            report.ReportType = Console.ReadLine();
+            while (!reportNames.Contains(report.ReportType))
             {
-                Console.WriteLine($"This report type {this.ReportType} is not available.");
+                Console.WriteLine($"This report type {report.ReportType} is not available.");
                 Console.Write("Enter report type: ");
-                this.ReportType = Console.ReadLine();
-
+                report.ReportType = Console.ReadLine();
             }
 
             Console.WriteLine("Please enter SW release");
-            this.SWRelease = Console.ReadLine();
-            Console.WriteLine($"*****Car Line: {this.CarLine} SW Release: {this.SWRelease} Report type: {this.ReportType} *****");
+            report.SWRelease = Console.ReadLine();
+            Console.WriteLine(
+                $"*****Car Line: {report.CarLine} SW Release: {report.SWRelease} Report type: {report.ReportType} *****");
             DateTime now = DateTime.Now;
             Console.WriteLine(now.ToString("F"));
-        }
 
+            return report;
+        }
 
         public string CarLine { get; private set; }
         public string SWRelease { get; private set; }
