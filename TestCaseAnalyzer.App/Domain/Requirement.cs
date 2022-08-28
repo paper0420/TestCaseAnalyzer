@@ -5,40 +5,48 @@ namespace TestCaseAnalyzer.App
 {
     public class Requirement
     {
-        public Requirement(IExcelDataReader reader, Header header)
+        private Requirement(string id)
         {
-            this.changeStatus = reader.GetString(header.GetColumnIndex("A_Change Status"));
-            this.panaStatus = reader.GetString(header.GetColumnIndex("A_Pana Status"));
-            this.VerificationSpecStatus = reader.GetValue(header.GetColumnIndex("A_Verification_Specification_Status"))?.ToString();
-            this.FusaType = reader.GetValue(header.GetColumnIndex("EAS_ASIL"))?.ToString();
+            this.ID = id;
+            this.EpicIDs = new string[0];
+        }
 
+        public static Requirement? CreateOrNull(IExcelDataReader reader, Header header)
+        {
             var idColumn = header.GetColumnIndex("Object ID from Original");
-            
-            var id = reader.GetValue(idColumn);
-            
-            if (!string.IsNullOrWhiteSpace(id?.ToString()))
+            var id = reader.GetValue(idColumn)?.ToString();
+
+            if (string.IsNullOrWhiteSpace(id))
             {
-                this.ID = reader.GetValue(idColumn).ToString();
+                return null;
             }
 
-            this.Objective = reader.GetString(header.GetColumnIndex("Englisch"));
-            this.VerificationMeasure = reader.GetValue(header.GetColumnIndex("A_Verification_Measure"))?.ToString()?.Replace("\n", "");
-            
+            Requirement requirement = new Requirement(id);
+
+            requirement.changeStatus = reader.GetString(header.GetColumnIndex("A_Change Status"));
+            requirement.panaStatus = reader.GetString(header.GetColumnIndex("A_Pana Status"));
+            requirement.VerificationSpecStatus = reader.GetValue(header.GetColumnIndex("A_Verification_Specification_Status"))?.ToString();
+            requirement.FusaType = reader.GetValue(header.GetColumnIndex("EAS_ASIL"))?.ToString();
+            requirement.Objective = reader.GetString(header.GetColumnIndex("Englisch"));
+            requirement.VerificationMeasure = reader.GetValue(header.GetColumnIndex("A_Verification_Measure"))?.ToString()?.Replace("\n", "");
+
+            return requirement;
+
             //this.EpicIDs = reader
             //    .GetString(21)?
             //    .Split("\n", System.StringSplitOptions.RemoveEmptyEntries)
             //    ?? new string[0];
         }
 
-        public string ID { get; }
-        public string Objective { get; }
-        public string changeStatus { get; }
-        public string panaStatus { get; }
-        public string VerificationSpecStatus { get; }
-        public string VerificationMeasure { get; }
-        public string Type { get; }
-        public string[] EpicIDs { get; }
-        public string FusaType { get; }
+        public string ID { get; private set; }
+        public string? Objective { get; private set; }
+        public string? changeStatus { get; private set; }
+        public string? panaStatus { get; private set; }
+        public string? VerificationSpecStatus { get; private set; }
+        public string? VerificationMeasure { get; private set; }
+        public string? Type { get; private set; }
+        public string[] EpicIDs { get; private set; }
+        public string? FusaType { get; private set; }
 
 
 
