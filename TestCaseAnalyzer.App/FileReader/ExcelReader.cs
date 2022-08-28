@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using TestCaseAnalyzer.App.Domain;
 
 namespace TestCaseAnalyzer.App.FileReader
 {
@@ -12,7 +14,6 @@ namespace TestCaseAnalyzer.App.FileReader
             Func<IExcelDataReader, Header, T> func)
         {
             //Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            //Console.WriteLine(file);
             //file = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file));
             //Console.WriteLine(file);
 
@@ -37,8 +38,17 @@ namespace TestCaseAnalyzer.App.FileReader
                                 };
                                 
                                 worksheet.Header.Columns.Add(column);
+
                             }
-                            
+
+                            if (sheet == "Test_Item")
+                            {
+                                worksheet.Header.GetCarLineNames(worksheet.Header.Columns);
+
+                            }
+
+
+
                             while (reader.Read())
                             {
                                 var row = func(reader, worksheet.Header);

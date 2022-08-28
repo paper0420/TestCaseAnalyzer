@@ -39,7 +39,9 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 reportTypeforFileName = "HVRTU";
             }
 
-            var fileName = $"BMW_CCU_SystemTestReport_SW{swRelease}_{carLine}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
+            var carLineforFileName = carLine.Replace("#", "").Replace("#", "");
+
+            var fileName = $"BMW_CCU_SystemTestReport_SW{swRelease}_{carLineforFileName}_{reportTypeforFileName}_{now.ToString("ddHHmmss")}.xlsx";
             var fileNameInOutputPaht = Path.GetFullPath(fileName, FileNames.OutputFolder);
             File.Copy(FileNames.ReportTemplateFile, fileNameInOutputPaht);
 
@@ -64,7 +66,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 {
                     if (!checkTCID.Contains(specTC.ID))
                     {
-                        if (specTC.Carlines.Contains(carLine))
+                        if (specTC.Carlines.Contains(carLine) && specTC.Result != null)
                         {
                             var writeCheckTest = false;
 
@@ -101,7 +103,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     }
                 }
                 WriteTotalSubTCs(workbook);
-                WriteTestIdentification(workbook,spec, carLine, swRelease);
+                WriteTestIdentification(workbook,spec, carLineforFileName, swRelease);
                 workbook.Save();
                 Console.WriteLine("**Report finished : " + now.ToString("F"));
             }
@@ -203,7 +205,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 {              
                     worksheet.Cell($"R{currentRow}").Value = "JUSTIFIED";
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
-                    //worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.FromArgb(0x548235);
+
                 }
                 else
                 {
@@ -217,7 +219,7 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 if (htmlTC.TotalTestResult == "FAILED")
                 {
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
-                    //worksheet.Cell($"R{currentRow}").Style.Fill.BackgroundColor = XLColor.Red;
+
                 }
 
                 if (htmlTC.TotalTestResult == "PASSED" && (htmlTC.NumberOfNotExecuted > 0 || htmlTC.NumberOfFailed > 0))

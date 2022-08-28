@@ -5,20 +5,27 @@ namespace TestCaseAnalyzer.App
 {
     public class FinalReportGenerationUI
     {
-        public static FinalReportGenerationUI ReadDataFromConsole(List<string> lineNames)
+        public static FinalReportGenerationUI ReadDataFromConsole(List<string> carLineNames)
         {
             Console.WriteLine("Please enter car line name");
-            Console.WriteLine("G60 , G70, I20 , G26 , G28 , G08LCI , U11");
+            foreach(var carLine in carLineNames)
+            {
+                var car = carLine.Replace("#", "").Replace("#", "");
+                Console.Write($"{car} ");
+            }
+            Console.WriteLine();
             Console.Write("Enter Car Line: ");
             
             var report = new FinalReportGenerationUI();
             report.CarLine = Console.ReadLine();
+            report.CarLine = $"#{report.CarLine}#";
 
-            while (!lineNames.Contains(report.CarLine))
+            while (!carLineNames.Contains(report.CarLine))
             {
                 Console.WriteLine($"This car line {report.CarLine} is not available.");
                 Console.Write("Enter Car Line: ");
                 report.CarLine = Console.ReadLine();
+                report.CarLine = $"#{report.CarLine}#";
             }
 
             List<string> reportNames = new List<string> { "HV", "Fusa", "Full" };

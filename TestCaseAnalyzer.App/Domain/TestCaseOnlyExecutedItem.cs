@@ -1,6 +1,7 @@
 ﻿using ExcelDataReader;
 using System.Collections.Generic;
 using System.Linq;
+using TestCaseAnalyzer.App.Domain;
 using TestCaseAnalyzer.App.FileReader;
 
 namespace TestCaseAnalyzer.App
@@ -44,7 +45,7 @@ namespace TestCaseAnalyzer.App
             this.Carlines = GetAvailableCarlines(
                     reader,
                     header,
-                    "G70", "G60", "G08LCI", "G26", "G28", "I20", "U11")
+                    CarLineNames.carLineNames)
                 .ToList();
             
             this.Type = reader.GetValue(header.GetColumnIndex("Type"))?.ToString();
@@ -69,17 +70,17 @@ namespace TestCaseAnalyzer.App
         private static IEnumerable<string> GetAvailableCarlines(
             IExcelDataReader reader,
             Header header,
-            params string[] columnNames)
+            List<string> carLineNames)
         {
-            foreach (var columnName in columnNames)
+            foreach (var carLineName in carLineNames)
             {
-                var columnIndex = header.GetColumnIndex(columnName);
+                var columnIndex = header.GetColumnIndex(carLineName);
             
                 var contains = reader.GetValue(columnIndex)?.ToString()?.Contains("X") == true;
 
                 if (contains)
                 {
-                    yield return columnName;
+                    yield return carLineName;
                 }
             }
         }
