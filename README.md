@@ -72,3 +72,23 @@ User need to check the history whether to change test result from "PASSED" to "J
 5) JUSTIFIED
 
 User need to verified whether this test case need to chang to be 'PASSED'.
+
+## How to add/remove **Car line** and **New test case ID**
+User need to modify `Test specification` excel file on `Test_Item` sheet
+
+### Add car line
+1) Insert new column
+2) Name of the car line should be in particular formatt #carlinename# (Ex. #G60#)
+
+
+### Remove car line
+Delete the column
+
+### Add new test case ID
+1) Insert the new row
+2) Fill the test case details (Grey column can be ignore due to it will not show in final test report) 
+
+### Remove test case ID
+1) Remove the row
+2) If you want to keep the test case ID, you can deactivate the test case by removing carline & test result.
+
