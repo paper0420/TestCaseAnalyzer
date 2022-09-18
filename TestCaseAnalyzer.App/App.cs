@@ -1,6 +1,8 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TestCaseAnalyzer.App.Database;
 using TestCaseAnalyzer.App.Domain;
 using TestCaseAnalyzer.App.FileReader;
 using TestCaseAnalyzer.App.ReportGenerators;
