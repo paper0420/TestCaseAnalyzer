@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCaseAnalyzer.App", "TestCaseAnalyzer.App\TestCaseAnalyzer.App.csproj", "{AC9C85DB-B632-40ED-B695-2243877D7C83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCaseAnalyzer.Excel", "TestCaseAnalyzer.Excel\TestCaseAnalyzer.Excel.csproj", "{87F11033-893D-4BA1-8007-0A6ED9C1C9D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCaseAnalyzer.Excel", "TestCaseAnalyzer.Excel\TestCaseAnalyzer.Excel.csproj", "{87F11033-893D-4BA1-8007-0A6ED9C1C9D5}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TestCaseAnalyzer.Database", "TestCaseAnalyzer.Database\TestCaseAnalyzer.Database.sqlproj", "{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{87F11033-893D-4BA1-8007-0A6ED9C1C9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87F11033-893D-4BA1-8007-0A6ED9C1C9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87F11033-893D-4BA1-8007-0A6ED9C1C9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37EB58BF-FE39-42ED-AA5A-55CFE08F6D53}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
