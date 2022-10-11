@@ -226,6 +226,8 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                     worksheet.Cell($"Q{currentRow}").Value = specTC.Comment;
                 }
 
+
+
             }
 
             if (htmlTC == null)
@@ -285,6 +287,20 @@ namespace TestCaseAnalyzer.App.ReportGenerators
                 worksheet.Cell($"Y{currentRow}").Value = "x";
 
             }
+
+            if(klhID.changeStatus == "Deleted" )
+            {
+                worksheet.Cell($"R{currentRow}").Value = "OBSOLETE";
+                worksheet.Cell($"Q{currentRow}").Value = "Test Cases linked with invalid KLH IDs which are rejected/deleted. refer to KAP#87885";
+            }
+
+            if(klhID.panaStatus == "rejected")
+            {
+                worksheet.Cell($"R{currentRow}").Value = "OBSOLETE";
+                worksheet.Cell($"Q{currentRow}").Value = "Test Cases linked with invalid KLH IDs which are rejected/deleted. refer to KAP#87885";
+            }
+
+
         }
 
         private static void WriteTotalSubTCs(XLWorkbook workbook)
