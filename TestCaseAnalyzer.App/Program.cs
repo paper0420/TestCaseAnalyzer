@@ -16,6 +16,8 @@ namespace TestCaseAnalyzer.App
 
             using var db = new TestCaseAnalyzerDbContext(options);
 
+            db.
+
             db.TestCaseItems.Add(new Database.Entities.TestCaseItem
             {
                 Objective = "helo",
