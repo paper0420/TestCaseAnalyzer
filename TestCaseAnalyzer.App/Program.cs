@@ -10,12 +10,13 @@ namespace TestCaseAnalyzer.App
 
         static void Main(string[] args)
         {
-            var options = new DbContextOptionsBuilder()
-                .UseSqlServer(DbConnectionString)
-                .Options;
+            //var options = new DbContextOptionsBuilder()
+            //    .UseSqlServer(DbConnectionString)
+            //    .Options;
 
-            using var db = new TestCaseAnalyzerDbContext(options);
+            //using var db = new TestCaseAnalyzerDbContext(options);
 
+<<<<<<< Updated upstream
             db.
 
             db.TestCaseItems.Add(new Database.Entities.TestCaseItem
@@ -23,11 +24,16 @@ namespace TestCaseAnalyzer.App
                 Objective = "helo",
                 TestCaseId = "gobye"
             });
+=======
+            //db.TestCaseItems.Add(new Database.Entities.TestCaseItem
+            //{
+            //    Objective = "helo",
+            //    TestCaseId = "gobye"
+            //});
+>>>>>>> Stashed changes
 
-            db.SaveChanges();
+            //db.SaveChanges();
 
-
-            return;
             App.RunMyApp();
         }
     

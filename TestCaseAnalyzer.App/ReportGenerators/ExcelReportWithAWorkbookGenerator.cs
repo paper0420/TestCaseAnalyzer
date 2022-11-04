@@ -1,6 +1,7 @@
 ﻿using IronXL;
 using System.Collections.Generic;
 using System.IO;
+using TestCaseAnalyzer.App.Spec;
 
 namespace TestCaseAnalyzer.App.ReportGenerators
 {

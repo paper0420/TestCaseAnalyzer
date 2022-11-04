@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TestCaseAnalyzer.App.Domain;
 
-namespace TestCaseAnalyzer.App
+namespace TestCaseAnalyzer.App.Spec
 {
     public class SpecParameters
     {
@@ -16,22 +16,22 @@ namespace TestCaseAnalyzer.App
             List<HtmlData> htmlDatas = null,
             List<SafetyGoalKLH> safetyGoalKLHs = null)
         {
-           
-            this.NewRequirements = newRequirements;
 
-            this.TestCases = testCases;
-            this.TestCasesByID = testCases.ToDictionary(testCase=>testCase.ID);
+            NewRequirements = newRequirements;
 
-            this.CurrentRequirements = currentRequirments;
-            this.CurrentRequirementsByID = currentRequirments
+            TestCases = testCases;
+            TestCasesByID = testCases.ToDictionary(testCase => testCase.ID);
+
+            CurrentRequirements = currentRequirments;
+            CurrentRequirementsByID = currentRequirments
                 .Where(curRequirement => curRequirement.ID != null)
                 .ToDictionary(curRequirement => curRequirement.ID);
 
-            this.HtmlDatas = htmlDatas;
+            HtmlDatas = htmlDatas;
 
-            if(htmlDatas != null)
+            if (htmlDatas != null)
             {
-                this.HtmlDatasByID = htmlDatas
+                HtmlDatasByID = htmlDatas
                 .Where(htmlData => htmlData.ID != null)
                 .DistinctBy(htmlData => htmlData.ID)
                 .ToDictionary(htmlData => htmlData.ID);
@@ -40,10 +40,10 @@ namespace TestCaseAnalyzer.App
 
 
             this.panaTestCases = panaTestCases;
-            this.XlsSheet = xlsSheet;
+            XlsSheet = xlsSheet;
 
-            this.SafetyGoalKLHs = safetyGoalKLHs;
-           
+            SafetyGoalKLHs = safetyGoalKLHs;
+
 
         }
 

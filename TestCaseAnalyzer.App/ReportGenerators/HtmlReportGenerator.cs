@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using TestCaseAnalyzer.App.Spec;
 
 namespace TestCaseAnalyzer.App.ReportGenerators
 {

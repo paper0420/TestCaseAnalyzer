@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using TestCaseAnalyzer.App.Spec;
 
 namespace TestCaseAnalyzer.App.Analysis
 {

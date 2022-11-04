@@ -5,6 +5,7 @@ using TestCaseAnalyzer.App.Domain;
 using System.IO;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Packaging;
+using TestCaseAnalyzer.App.Spec;
 
 namespace TestCaseAnalyzer.App.ReportGenerators
 {
